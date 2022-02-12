@@ -1,4 +1,4 @@
-const createVirtualElement = (options) => {
+export const createVirtualElement = (options) => {
   return {
     identifier: window.crypto.randomUUID(),
     name: options.name,
@@ -152,7 +152,7 @@ const getPatch = (oldVirtualElement, newVirtualElement) => {
   };
 };
 
-const app = ({view, state, update, element}) => {
+export const app = ({view, state, update, element}) => {
   let virtualElement = view(state);
 
   const patch = getPatch(null, virtualElement);
