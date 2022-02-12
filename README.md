@@ -5,6 +5,8 @@ Virtual DOM based JavaScript framework
 ## Usage
 
 ```javascript
+import {createVirtualElement, app} from "@aminnairi/virtual";
+
 app({
   state: {},
   update: (state) => {
@@ -24,6 +26,8 @@ app({
 ## Advanced usage
 
 ```javascript
+import {createVirtualElement, app} from "@aminnairi/virtual";
+
 const dispatch = app({
   state: {
     counter: 0
