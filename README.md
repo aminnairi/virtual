@@ -5,9 +5,9 @@ Virtual DOM based JavaScript framework
 ## Usage
 
 ```javascript
-import {createVirtualElement, app} from "@aminnairi/virtual";
+import {createVirtualElement, createDispatch} from "@aminnairi/virtual";
 
-app({
+createDispatch({
   state: {},
   update: (state) => {
     return state;

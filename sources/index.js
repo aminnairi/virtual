@@ -162,7 +162,7 @@ const getPatch = (oldVirtualElement, newVirtualElement) => {
   };
 };
 
-export const app = ({view, state, update, element}) => {
+export const createDispatch = ({view, state, update, element}) => {
   let virtualElement = view(state);
 
   const patch = getPatch(null, virtualElement);
