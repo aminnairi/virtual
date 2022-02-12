@@ -1,0 +1,20 @@
+version: "3"
+
+services:
+  node:
+    image: node:17.0.0-alpine
+    user: node
+    entrypoint: node
+    working_dir: /home/node
+    tty: true
+    stdin_open: true
+    volumes:
+      - .:/home/node
+
+  npm:
+    extends: node
+    entrypoint: npm
+
+  npx:
+    extends: node
+    entrypoint: npx
