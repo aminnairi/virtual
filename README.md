@@ -5,15 +5,12 @@ Virtual DOM based JavaScript framework
 ## Usage
 
 ```javascript
-const dispatch = app({
+app({
   state: {},
-  update: (state, {type, payload}) => {
-    switch (type) {
-      default:
-        return state;
-    }
+  update: (state) => {
+    return state;
   },
-  view: state => {
+  view: () => {
     return createVirtualElement({
       name: "h1",
       attributes: {},
