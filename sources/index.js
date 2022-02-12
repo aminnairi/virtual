@@ -99,6 +99,10 @@ const getPatch = (oldVirtualElement, newVirtualElement) => {
 
     const oldElement = element.querySelector(`[data-identifier="${oldVirtualElement.identifier}"]`);
 
+    if (!oldElement) {
+      return;
+    }
+
     if (!newVirtualElement) {
       element.removeChild(oldElement);
       return;
@@ -142,13 +146,19 @@ const getPatch = (oldVirtualElement, newVirtualElement) => {
       }
     });
 
-    oldElement.dataset.identifier = newVirtualElement.identifier;
-
     oldVirtualElement.children.forEach((oldChild, oldChildIndex) => {
       const newChild = newVirtualElement.children[oldChildIndex];
       const patch = getPatch(oldChild, newChild);
       patch(oldElement);
     });
+
+    newVirtualElement.children.forEach((newChild, newChildIndex) => {
+      const oldChild = oldVirtualElement.children[newChildIndex];
+      const patch = getPatch(oldChild, newChild);
+      patch(oldElement);
+    });
+
+    oldElement.dataset.identifier = newVirtualElement.identifier;
   };
 };
 
