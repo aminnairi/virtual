@@ -8,6 +8,8 @@ services:
     working_dir: /home/node
     tty: true
     stdin_open: true
+    ports:
+      - 8000:8000
     volumes:
       - .:/home/node
 
