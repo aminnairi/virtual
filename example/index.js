@@ -2,20 +2,27 @@ import {createVirtualElement, app} from "../sources/index.js";
 
 const dispatch = app({
   state: {
-    counter: 0
+    todo: "",
+    todos: [
+      "Do the laundry"
+    ]
   },
   update: (state, {type, payload}) => {
     switch (type) {
-      case "INCREASE":
+      case "SET_TODO":
         return {
           ...state,
-          counter: state.counter + 1
+          todo: payload
         };
 
-      case "DECREASE":
+      case "ADD_TODO":
         return {
           ...state,
-          counter: state.counter - 1
+          todo: "",
+          todos: [
+            ...state.todos,
+            state.todo
+          ]
         };
 
       default:
@@ -27,29 +34,34 @@ const dispatch = app({
     attributes: {},
     children: [
       createVirtualElement({
+        name: "input",
+        attributes: {
+          value: state.todo,
+          oninput: event => dispatch({
+            type: "SET_TODO",
+            payload: event.currentTarget.value
+          })
+        },
+        children: []
+      }),
+      createVirtualElement({
         name: "button",
         attributes: {
           onclick: () => dispatch({
-            type: "DECREASE",
+            type: "ADD_TODO",
             payload: null
           })
         },
-        children: ["Decrease"]
+        children: ["Add"]
       }),
       createVirtualElement({
-        name: "span",
+        name: "ul",
         attributes: {},
-        children: [String(state.counter)]
-      }),
-      createVirtualElement({
-        name: "button",
-        attributes: {
-          onclick: () => dispatch({
-            type: "INCREASE",
-            payload: null
-          })
-        },
-        children: ["Increase"]
+        children: state.todos.map(todo => createVirtualElement({
+          name: "li",
+          attributes: {},
+          children: [todo]
+        }))
       })
     ]
   }),
