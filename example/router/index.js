@@ -2,6 +2,7 @@ import {createDispatch, createVirtualElement} from "../../sources/index.js";
 import {match, always, equals, when} from "./utils.js";
 
 const dispatch = createDispatch({
+  element: document.getElementById("element"),
   state: {
     route: window.location.pathname
   },
@@ -75,18 +76,18 @@ const dispatch = createDispatch({
                 attributes: {},
                 children: ["Home"]
               })),
-              when(always(true), () => createVirtualElement({
+              when(equals("/about"), () => createVirtualElement({
                 name: "h1",
                 attributes: {},
-                children: ["Not found"]
-              }))
+                children: ["About"]
+              })),
+              when(always(true), () => null)
             ])
           ]
         })
       ]
     })
-  },
-  element: document.getElementById("element")
+  }
 });
 
 window.addEventListener("route", (event) => {
@@ -94,4 +95,8 @@ window.addEventListener("route", (event) => {
     type: "ROUTE_CHANGED",
     payload: window.location.pathname
   });
+});
+
+window.addEventListener("popstate", () => {
+  window.dispatchEvent(new CustomEvent("route"));
 });

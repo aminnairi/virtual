@@ -1,4 +1,4 @@
-import {createVirtualElement, createDispatch} from "../sources/index.js";
+import {createVirtualElement, createDispatch} from "../../sources/index.js";
 
 // This is basically a todo list app
 // But using a more functional take compared to other libraries and frameworks
