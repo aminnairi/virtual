@@ -29,18 +29,14 @@ Virtual DOM based JavaScript framework for building dynamic websites.
 import {createVirtualElement, createDispatch} from "@aminnairi/virtual";
 
 createDispatch({
-  state: {},
-  update: (state) => {
-    return state;
-  },
-  view: () => {
-    return createVirtualElement({
-      name: "h1",
-      attributes: {},
-      children: ["Hello, world!"]
-    })
-  },
   element: document.getElementById("element")
+  state: {},
+  update: state => state,
+  view: () => createVirtualElement({
+    name: "h1",
+    attributes: {},
+    children: ["Hello, world!"]
+  }),
 });
 ```
 
