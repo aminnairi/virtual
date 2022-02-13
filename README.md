@@ -2,6 +2,10 @@
 
 Virtual DOM based JavaScript framework
 
+## Disclaimer
+
+:warning: This is just an exploration of mine, this wont be a big thing. Use it at your own risks. There are still a lot to improve. :warning:
+
 ## Usage
 
 ```javascript

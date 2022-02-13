@@ -28,6 +28,12 @@ const dispatch = createDispatch({
           ]
         };
 
+      case "REMOVE_TODO":
+        return {
+          ...state,
+          todos: state.todos.filter((todo, todoIndex) => todoIndex !== payload)
+        };
+
       default:
         return state;
     }
@@ -39,31 +45,42 @@ const dispatch = createDispatch({
     // Attributes are just a record of the HTML attributes you want
     attributes: {},
     children: [
-      // A virtual element is just an object representing an HTMLElement
       createVirtualElement({
-        name: "input",
-        attributes: {
-          value: state.todo,
-          // You can have events too in attributes
-          // They take the exact same name as in JavaScript
-          oninput: event => dispatch({
-            type: "SET_TODO",
-            payload: event.currentTarget.value
-          })
-        },
-        children: []
-      }),
-      createVirtualElement({
-        name: "button",
+        name: "form",
         attributes: {
           // Dispatching means calling the update function with the wanted type and payload
-          onclick: () => dispatch({
-            type: "ADD_TODO",
-            payload: null
-          })
+          onsubmit: (event) => {
+            event.preventDefault();
+            dispatch({
+              type: "ADD_TODO",
+              payload: null
+            });
+          },
         },
-        // Children can be either a text or another virtual element
-        children: ["Add"]
+        children: [
+          // A virtual element is just an object representing an HTMLElement
+          createVirtualElement({
+            name: "input",
+            attributes: {
+              value: state.todo,
+              // You can have events too in attributes
+              // They take the exact same name as in JavaScript
+              oninput: event => dispatch({
+                type: "SET_TODO",
+                payload: event.currentTarget.value
+              })
+            },
+            children: []
+          }),
+          createVirtualElement({
+            name: "button",
+            attributes: {
+              type: "submit"
+            },
+            // Children can be either a text or another virtual element
+            children: ["Add"]
+          }),
+        ]
       }),
       // You can have conditional rendering too using a ternary operator
       state.todos.length === 0 ? createVirtualElement({
@@ -75,10 +92,27 @@ const dispatch = createDispatch({
         attributes: {},
         // Rendering dynamic child is just a matter of calling the map method on an array
         // As long as you return an array of virtual element
-        children: state.todos.map(todo => createVirtualElement({
+        children: state.todos.map((todo, todoIndex) => createVirtualElement({
           name: "li",
           attributes: {},
-          children: [todo]
+          children: [
+            createVirtualElement({
+              name: "span",
+              attributes: {},
+              children: [todo]
+            }),
+            // Yes this is a real todo app
+            createVirtualElement({
+              name: "button",
+              attributes: {
+                onclick: () => dispatch({
+                  type: "REMOVE_TODO",
+                  payload: todoIndex
+                })
+              },
+              children: ["Remove"]
+            })
+          ]
         }))
       })
     ]
