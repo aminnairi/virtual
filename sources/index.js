@@ -50,6 +50,10 @@ const getNewAttributes = (oldAttributes, newAttributes) => {
 };
 
 const render = virtualElement => {
+  if (typeof virtualElement === "string") {
+    return document.createTextNode(virtualElement);
+  }
+
   const element = document.createElement(virtualElement.name);
 
   Object.entries(virtualElement.attributes).forEach(([attributeName, attributeValue]) => {
@@ -62,11 +66,7 @@ const render = virtualElement => {
   });
 
   virtualElement.children.forEach(child => {
-    if (typeof child === "string") {
-      element.appendChild(document.createTextNode(child));
-    } else {
-      element.appendChild(render(child));
-    }
+    element.appendChild(render(child));
   });
 
   element.dataset.identifier = virtualElement.identifier;
@@ -77,8 +77,11 @@ const render = virtualElement => {
 const getPatch = (oldVirtualElement, newVirtualElement) => {
   return element => {
     if (!oldVirtualElement) {
-      const newElement = render(newVirtualElement);
-      element.appendChild(newElement);
+      if (newVirtualElement) {
+        const newElement = render(newVirtualElement);
+        element.appendChild(newElement);
+      }
+
       return;
     }
 
