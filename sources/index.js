@@ -1,186 +1,168 @@
-export const createVirtualElement = (options) => {
+const string = target => typeof target === "string";
+const nil = target => target === null || target === undefined;
+const element = target => target instanceof Element;
+const plainArray = target => Array.isArray(target);
+const plainObject = target => typeof target === "object" && !plainArray(target) && target !== null;
+const object = (types) => (target) => plainObject(target) && types.every(type => type(target));
+const property = (name, type) => target => plainObject(target) && type(target[name]);
+const array = (type) => target => plainArray(target) && target.every(item => type(item));
+const virtualElement = target => object([property("identifier", string), property("name", string), property("children", array), property("attributes", plainObject)]);
+
+export const createVirtualElement = ({name, attributes, children}) => {
   return {
     identifier: window.crypto.randomUUID(),
-    name: options.name,
-    attributes: options.attributes,
-    children: options.children
+    name,
+    attributes,
+    children
   };
 };
 
-const getUpdatedAttributes = (oldAttributes, newAttributes) => {
-  return Object.entries(oldAttributes).reduce((updatedAttributes, [oldAttributeName, oldAttributeValue]) => {
-    if (typeof newAttributes[oldAttributeName] === "undefined" || oldAttributeValue === newAttributes[oldAttributeName]) {
-      return updatedAttributes;
-    }
-
-    return {
-      ...updatedAttributes,
-      [oldAttributeName]: {
-        oldValue: oldAttributeValue,
-        newValue: newAttributes[oldAttributeName]
-      }
-    };
-  }, {});
-};
-
-const getRemovedAttributes = (oldAttributes, newAttributes) => {
-  return Object.entries(oldAttributes).reduce((removedAttributes, [oldAttributeName, oldAttributeValue]) => {
-    if (typeof newAttributes[oldAttributeName] !== "undefined") {
-      return removedAttributes;
-    }
-
-    return [
-      ...removedAttributes,
-      oldAttributeName
-    ];
-  }, []);
-};
-
-const getNewAttributes = (oldAttributes, newAttributes) => {
-  return Object.entries(newAttributes).reduce((newAttributes, [newAttributeName, newAttributeValue]) => {
-    if (typeof oldAttributes[newAttributeName] !== "undefined") {
-      return newAttributes;
-    }
-
-    return {
-      ...newAttributes,
-      [newAttributeName]: newAttributeValue
-    };
-  }, {});
-};
-
-const render = virtualElement => {
-  if (typeof virtualElement === "string") {
-    return document.createTextNode(virtualElement);
+const render = (options) => {
+  if (string(options)) {
+    return document.createTextNode(options);
   }
 
-  const element = document.createElement(virtualElement.name);
+  if (!virtualElement(options)) {
+    return;
+  }
 
-  Object.entries(virtualElement.attributes).forEach(([attributeName, attributeValue]) => {
-    if (attributeName.startsWith("on")) {
-      const eventName = attributeName.slice(2);
-      element.addEventListener(eventName, attributeValue);
-    } else {
-      element[attributeName] = attributeValue;
-    }
+  const {identifier, name, attributes, children} = options;
+
+  const element = document.createElement(name);
+
+  Object.entries(attributes).forEach(([attributeName, attributeValue]) => {
+    element[attributeName] = attributeValue;
   });
 
-  virtualElement.children.forEach(child => {
+  children.forEach(child => {
     element.appendChild(render(child));
   });
 
-  element.dataset.identifier = virtualElement.identifier;
+  element.dataset.virtual = identifier;
 
   return element;
 };
 
-const getPatch = (oldVirtualElement, newVirtualElement) => {
-  return element => {
-    if (!oldVirtualElement) {
-      if (newVirtualElement) {
-        const newElement = render(newVirtualElement);
-        element.appendChild(newElement);
+const createPatch = (oldVirtualElement, newVirtualElement) => {
+  return htmlElement => {
+    if (nil(htmlElement)) {
+      return;
+    }
+
+    if (nil(oldVirtualElement)) {
+      if (!nil(newVirtualElement)) {
+        htmlElement.appendChild(render(newVirtualElement));
+        return;
       }
 
       return;
     }
 
-    if (typeof oldVirtualElement === "string") {
-      if (typeof newVirtualElement === "string") {
+    if (string(oldVirtualElement)) {
+      if (string(newVirtualElement)) {
         if (oldVirtualElement === newVirtualElement) {
           return;
         }
 
-        element.innerText = newVirtualElement;
+        htmlElement.innerText = newVirtualElement;
         return;
       }
 
-      element.innerText = "";
-      element.appendChild(render(newVirtualElement));
+      if (nil(newVirtualElement)) {
+        htmlElement.innerText = "";
+        return;
+      }
+
+      htmlElement.innerHTML = "";
+      htmlElement.appendChild(render(newVirtualElement));
       return;
     }
 
-    const oldElement = element.querySelector(`[data-identifier="${oldVirtualElement.identifier}"]`);
-
-    if (!oldElement) {
+    if (!virtualElement(oldVirtualElement)) {
       return;
     }
 
-    if (!newVirtualElement) {
-      element.removeChild(oldElement);
+    const oldElement = document.querySelector(`[data-virtual="${oldVirtualElement.identifier}"]`);
+
+    if (!element(oldElement)) {
       return;
     }
 
-    if (typeof newVirtualElement === "string") {
-      oldElement.replaceWith(document.createTextNode(newVirtualElement));
+    if (nil(newVirtualElement)) {
+      htmlElement.removeChild(oldElement);
+      return;
+    }
+
+    if (string(newVirtualElement)) {
+      htmlElement.innerHTML = "";
+      htmlElement.innerText = newVirtualElement;
+      return;
+    }
+
+    if (!virtualElement(newVirtualElement)) {
       return;
     }
 
     if (oldVirtualElement.name !== newVirtualElement.name) {
-      const newElement = render(newVirtualElement);
-      oldElement.replaceWith(newElement);
+      htmlElement.replaceChild(render(newVirtualElement), oldElement);
       return;
     }
 
-    const updatedAttributes = getUpdatedAttributes(oldVirtualElement.attributes, newVirtualElement.attributes);
-    const removedAttributes = getRemovedAttributes(oldVirtualElement.attributes, newVirtualElement.attributes);
-    const newAttributes = getNewAttributes(oldVirtualElement.attributes, newVirtualElement.attributes);
+    Object.entries(oldVirtualElement.attributes).forEach(([oldAttributeName, oldAttributeValue]) => {
+      const newAttributeValue = newVirtualElement.attributes[oldAttributeName];
 
-    Object.entries(updatedAttributes).forEach(([attributeName, {oldValue, newValue}]) => {
-      if (attributeName.startsWith("on")) {
-        const eventName = attributeName.slice(2);
-        oldElement.removeEventListener(eventName, oldValue);
-        oldElement.addEventListener(eventName, newValue);
-      } else {
-        oldElement[attributeName] = newValue;
+      if (nil(newAttributeValue)) {
+        oldElement.removeAttribute(oldAttributeName);
+        return;
+      }
+
+
+      if (oldAttributeValue !== newAttributeValue) {
+        console.log("here");
+        oldElement[oldAttributeName] = newAttributeValue;
       }
     });
 
-    removedAttributes.forEach(removedAttributeName => {
-      oldElement.removeAttribute(removedAttributeName);
-    });
+    Object.entries(newVirtualElement.attributes).forEach(([newAttributeName, newAttributeValue]) => {
+      const oldAttributeValue = oldVirtualElement.attributes[newAttributeName];
 
-    Object.entries(newAttributes).forEach(([newAttributeName, newAttributeValue]) => {
-      if (newAttributeName.startsWith("on")) {
-        const eventName = newAttributeName.slice(2);
-        oldElement.addEventListener(eventName, newAttributeValue);
-      } else {
+      if (nil(oldAttributeValue)) {
         oldElement[newAttributeName] = newAttributeValue;
       }
     });
 
-    oldVirtualElement.children.forEach((oldChild, oldChildIndex) => {
-      const newChild = newVirtualElement.children[oldChildIndex];
-      const patch = getPatch(oldChild, newChild);
-      patch(oldElement);
-    });
-
     newVirtualElement.children.forEach((newChild, newChildIndex) => {
       const oldChild = oldVirtualElement.children[newChildIndex];
-      const patch = getPatch(oldChild, newChild);
+      const patch = createPatch(oldChild, newChild);
       patch(oldElement);
     });
 
-    oldElement.dataset.identifier = newVirtualElement.identifier;
+    oldVirtualElement.children.forEach((oldChild, oldChildIndex) => {
+      const newChild = newVirtualElement.children[oldChildIndex];
+
+      if (!newChild) {
+        const patch = createPatch(oldChild, newChild);
+        patch(oldElement);
+      }
+    });
+
+    newVirtualElement.identifier = oldVirtualElement.identifier;
   };
 };
 
-export const createDispatch = ({view, state, update, element}) => {
-  let virtualElement = view(state);
+export const createDispatch = (options) => {
+  let virtualElement = options.view(options.state);
 
-  const patch = getPatch(null, virtualElement);
-
-  patch(element);
+  const patch = createPatch(null, virtualElement);
+  patch(options.element);
 
   const dispatch = ({type, payload}) => {
-    const newState = update(state, {type, payload});
-    const newVirtualElement = view(newState);
-    const newPatch = getPatch(virtualElement, newVirtualElement);
-
-    newPatch(element);
-
-    state = newState;
+    const newState = options.update(options.state, {type, payload});
+    const newVirtualElement = options.view(newState);
+    const innerPatch = createPatch(virtualElement, newVirtualElement);
+    innerPatch(options.element);
     virtualElement = newVirtualElement;
+    options.state = newState;
   };
 
   return dispatch;
