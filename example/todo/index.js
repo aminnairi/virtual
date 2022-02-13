@@ -79,7 +79,7 @@ const dispatch = createDispatch({
             name: "button",
             attributes: {
               type: "submit",
-              className: ["border", "rounded", "bg-blue-600", "text-white", "px-4", "py-1", "hover:bg-blue-700", "focus:bg-blue-800", "outline-none", "tracking-wider", "transition-colors"].join(" "),
+              className: ["border", "rounded", "bg-blue-600", "text-white", "px-4", "py-1", "hover:bg-blue-700", "focus:bg-blue-800", "outline-none", "tracking-wider", "transition-colors", "font-bold", "lowercase"].join(" "),
             },
             // Children can be either a text or another virtual element
             children: ["Add"]
@@ -123,7 +123,7 @@ const dispatch = createDispatch({
             createVirtualElement({
               name: "button",
               attributes: {
-                className: ["tracking-wider", "ml-2", "px-3", "py-1", "bg-red-50", "border", "rounded", "border-red-300", "text-red-400", "focus:bg-red-800", "focus:border-red-800", "focus:text-red-50", "hover:bg-red-700", "hover:text-red-100", "hover:border-red-700", "transition-colors"].join(" "),
+                className: ["tracking-wider", "ml-2", "px-3", "py-1", "bg-red-50", "border", "rounded", "border-red-300", "text-red-400", "focus:bg-red-800", "focus:border-red-800", "focus:text-red-50", "hover:bg-red-700", "hover:text-red-100", "hover:border-red-700", "transition-colors", "font-bold", "lowercase"].join(" "),
                 onclick: () => dispatch({
                   type: "REMOVE_TODO",
                   payload: todoIndex
