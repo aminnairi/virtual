@@ -43,7 +43,9 @@ const dispatch = createDispatch({
     // The name is the tag name of the wanted element
     name: "div",
     // Attributes are just a record of the HTML attributes you want
-    attributes: {},
+    attributes: {
+      className: ["p-4"],
+    },
     children: [
       createVirtualElement({
         name: "form",
@@ -62,6 +64,7 @@ const dispatch = createDispatch({
           createVirtualElement({
             name: "input",
             attributes: {
+              className: ["border", "rounded", "border-gray-300", "px-2", "py-1", "mr-2", "outline-none", "focus:border-gray-600"].join(" "),
               value: state.todo,
               // You can have events too in attributes
               // They take the exact same name as in JavaScript
@@ -75,7 +78,8 @@ const dispatch = createDispatch({
           createVirtualElement({
             name: "button",
             attributes: {
-              type: "submit"
+              type: "submit",
+              className: ["border", "rounded", "bg-blue-600", "text-white", "px-4", "py-1", "hover:bg-blue-700", "focus:bg-blue-800", "outline-none", "tracking-wider", "transition-colors"].join(" "),
             },
             // Children can be either a text or another virtual element
             children: ["Add"]
@@ -86,25 +90,40 @@ const dispatch = createDispatch({
       state.todos.length === 0 ? createVirtualElement({
         name: "p",
         attributes: {},
-        children: ["No todos to display"]
+        children: [
+          createVirtualElement({
+            name: "div",
+            attributes: {
+              className: ["text-gray-400", "mt-2"].join(" "),
+            },
+            children: ["No todos to display"]
+          })
+        ]
       }) : createVirtualElement({
         name: "ul",
-        attributes: {},
+        attributes: {
+          className: ["mt-2", "pl-2"].join(" ")
+        },
         // Rendering dynamic child is just a matter of calling the map method on an array
         // As long as you return an array of virtual element
         children: state.todos.map((todo, todoIndex) => createVirtualElement({
           name: "li",
-          attributes: {},
+          attributes: {
+            className: ["mb-2"].join(" "),
+          },
           children: [
             createVirtualElement({
               name: "span",
-              attributes: {},
+              attributes: {
+                className: ["text-gray-700"].join(" ")
+              },
               children: [todo]
             }),
             // Yes this is a real todo app
             createVirtualElement({
               name: "button",
               attributes: {
+                className: ["tracking-wider", "ml-2", "px-3", "py-1", "bg-red-50", "border", "rounded", "border-red-300", "text-red-400", "focus:bg-red-800", "focus:border-red-800", "focus:text-red-50", "hover:bg-red-700", "hover:text-red-100", "hover:border-red-700", "transition-colors"].join(" "),
                 onclick: () => dispatch({
                   type: "REMOVE_TODO",
                   payload: todoIndex
