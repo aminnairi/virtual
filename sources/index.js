@@ -118,7 +118,6 @@ const createPatch = (oldVirtualElement, newVirtualElement) => {
 
 
       if (oldAttributeValue !== newAttributeValue) {
-        console.log("here");
         oldElement[oldAttributeName] = newAttributeValue;
       }
     });
