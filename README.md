@@ -112,3 +112,7 @@ See [`example`](./example).
 - [ ] Explicit runtime errors
 - [ ] Hosted examples
 - [ ] Unit tests
+
+## License
+
+See [](./LICENSE).
