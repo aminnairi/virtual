@@ -1,5 +1,9 @@
 import {createDispatch, createVirtualElement} from "../../sources/index.js";
-import {match, always, equals, when} from "./utils.js";
+
+const go = (route) => {
+  window.history.pushState(null, null, route);
+  window.dispatchEvent(new CustomEvent("route"));
+};
 
 const dispatch = createDispatch({
   element: document.getElementById("element"),
@@ -19,74 +23,74 @@ const dispatch = createDispatch({
     }
   },
   view: (state) => {
-    return createVirtualElement({
-      name: "div",
-      attributes: {},
-      children: [
-        createVirtualElement({
-          name: "header",
-          attributes: {},
-          children: [
-            createVirtualElement({
-              name: "ul",
-              attributes: {},
-              children: [
-                createVirtualElement({
-                  name: "li",
-                  attributes: {
-                    onclick: () => {
-                      window.history.pushState(null, "/", "/");
-                      window.dispatchEvent(new CustomEvent("route"));
-                    }
-                  },
-                  children: ["Home"]
-                }),
-                createVirtualElement({
-                  name: "li",
-                  attributes: {
-                    onclick: () => {
-                      window.history.pushState(null, "/about", "/about");
-                      window.dispatchEvent(new CustomEvent("route"));
-                    }
-                  },
-                  children: ["About"]
-                }),
-                createVirtualElement({
-                  name: "li",
-                  attributes: {},
-                  attributes: {
-                    onclick: () => {
-                      window.history.pushState(null, "/contact", "/contact");
-                      window.dispatchEvent(new CustomEvent("route"));
-                    }
-                  },
-                  children: ["Contact"]
-                })
-              ]
-            })
-          ]
-        }),
-        createVirtualElement({
-          name: "main",
-          attributes: {},
-          children: [
-            match(state.route, [
-              when(equals("/"), () => createVirtualElement({
-                name: "h1",
-                attributes: {},
-                children: ["Home"]
-              })),
-              when(equals("/about"), () => createVirtualElement({
-                name: "h1",
-                attributes: {},
-                children: ["About"]
-              })),
-              when(always(true), () => null)
-            ])
-          ]
-        })
-      ]
-    })
+    if (state.route === "/") {
+      return createVirtualElement({
+        name: "div",
+        attributes: {},
+        children: [
+          createVirtualElement({
+            name: "h1",
+            attributes: {},
+            children: ["Home"]
+          }),
+          createVirtualElement({
+            name: "button",
+            attributes: {
+              onclick: () => go("/about")
+            },
+            children: ["About"]
+          }),
+          createVirtualElement({
+            name: "button",
+            attributes: {
+              onclick: () => go("/contact")
+            },
+            children: ["Contact"]
+          }),
+          createVirtualElement({
+            name: "p",
+            attributes: {},
+            children: ["This is a welcome paragraph for new users."]
+          })
+        ]
+      });
+    }
+
+    if (state.route === "/about") {
+      return createVirtualElement({
+        name: "div",
+        attributes: {},
+        children: [
+          createVirtualElement({
+            name: "h1",
+            attributes: {},
+            children: ["about"]
+          }),
+          createVirtualElement({
+            name: "button",
+            attributes: {
+              onclick: () => go("/")
+            },
+            children: ["Home"]
+          }),
+          createVirtualElement({
+            name: "button",
+            attributes: {
+              onclick: () => go("/contact")
+            },
+            children: ["Contact"]
+          }),
+          createVirtualElement({
+            name: "p",
+            attributes: {},
+            children: ["This is a little paragraph about your website."]
+          })
+        ]
+      });
+    }
+
+    // Use the history of your browser to go back
+    return null;
   }
 });
 
