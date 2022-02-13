@@ -110,3 +110,5 @@ See [`example`](./example).
 - [X] Global TEA-like state
 - [ ] Keying of lists
 - [ ] Explicit runtime errors
+- [ ] Hosted examples
+- [ ] Unit tests
