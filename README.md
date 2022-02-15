@@ -612,7 +612,7 @@ curl -O /path/to/your/project/virtual.js https://github.com/aminnairi/virtual/tr
 - [X] Global TEA-like state
 - [X] Add a load handler when creating a virtual element
 - [X] Add an unload handler when creating a virtual element
-- [X] Keying of lists
+- [X] Keying
 - [ ] Explicit runtime errors
 - [ ] Hosted examples
 - [ ] Unit tests
