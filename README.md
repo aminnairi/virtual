@@ -1,6 +1,6 @@
 # virtual
 
-Virtual DOM based JavaScript framework for building dynamic websites.
+Virtual DOM based JavaScript library for building dynamic websites.
 
 ## 1 Disclaimer
 

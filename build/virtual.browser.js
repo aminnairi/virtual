@@ -1,6 +1,6 @@
 !function(t){"use strict";
 /*!
-   * Virtual DOM based JavaScript framework for building dynamic websites.
+   * Virtual DOM based JavaScript library for building dynamic websites.
    * Copyright (C) 2022 Amin NAIRI
    *
    * This program is free software: you can redistribute it and/or modify
