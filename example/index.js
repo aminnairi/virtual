@@ -17,13 +17,92 @@
  */
 import {createApplication, createVirtualElement} from "../sources/index.js";
 
-createApplication({
+window.addEventListener("popstate", () => {
+  window.dispatchEvent(new CustomEvent("route"));
+});
+
+window.addEventListener("route", () => {
+  dispatch({
+    type: "ROUTE_CHANGED",
+    payload: window.location.pathname
+  });
+});
+
+const go = route => {
+  window.history.pushState(null, null, route);
+  window.dispatchEvent(new CustomEvent("route"));
+};
+
+const dispatch = createApplication({
   element: document.getElementById("application"),
-  state: {},
-  update: state => state,
-  view: () => createVirtualElement({
+  state: {
+    route: window.location.pathname
+  },
+  update: (state, {type, payload}) => {
+    switch (type) {
+      case "ROUTE_CHANGED":
+        return {...state, route: payload};
+
+      default:
+        return state;
+    }
+  },
+  view: (state, update) => createVirtualElement({
     name: "div",
     attributes: {},
-    children: ["hello"]
+    children: [
+      createVirtualElement({
+        name: "header",
+        attributes: {},
+        children: [
+          createVirtualElement({
+            name: "ul",
+            attributes: {},
+            children: [
+              createVirtualElement({
+                name: "li",
+                attributes: {
+                  onclick: () => go("/")
+                },
+                children: ["Home"]
+              }),
+              createVirtualElement({
+                name: "li",
+                attributes: {
+                  onclick: () => go("/contact")
+                },
+                children: ["Contact"]
+              }),
+              createVirtualElement({
+                name: "li",
+                attributes: {
+                  onclick: () => go("/about")
+                },
+                children: ["About"]
+              })
+            ]
+          })
+        ]
+      }),
+      createVirtualElement({
+        name: "main",
+        attributes: {},
+        children: [
+          state.route === "/" ? createVirtualElement({
+            name: "h1",
+            attributes: {},
+            children: ["Home"]
+          }) : state.route === "/about" ? createVirtualElement({
+            name: "h1",
+            attributes: {},
+            children: ["About"]
+          }) : createVirtualElement({
+            name: "h1",
+            attributes: {},
+            children: ["Not found"]
+          })
+        ]
+      })
+    ]
   })
 });
