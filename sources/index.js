@@ -17,6 +17,7 @@
  */
 //@ts-check
 import {isString, isElement, isVirtualElement, isNullOrUndefined, isCallable} from "./typing.js";
+import {deepFreeze} from "./security.js";
 
 export const createVirtualElement = ({name, key, attributes, children}) => {
   return {
@@ -198,14 +199,14 @@ export const createApplication = (options) => {
 
   const dispatch = ({type, payload}) => {
     const newState = options.update(options.state, {type, payload});
-    const newVirtualElement = options.view(newState, dispatch);
+    const newVirtualElement = options.view(deepFreeze(newState), deepFreeze(dispatch));
     const innerPatch = createPatch(virtualElement, newVirtualElement);
     innerPatch(options.element);
     virtualElement = newVirtualElement;
     options.state = newState;
   };
 
-  virtualElement = options.view(options.state, dispatch);
+  virtualElement = options.view(deepFreeze(options.state), deepFreeze(dispatch));
 
   const patch = createPatch(null, virtualElement);
   patch(options.element);
