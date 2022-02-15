@@ -538,7 +538,7 @@ curl -O /path/to/your/project/virtual.js https://github.com/aminnairi/virtual/tr
 <html>
   <body>
     <script type="module">
-      import {createVirtualElement, createApplication} from "https://cdn.jsdelivr.net/gh/aminnairi/virtual/build/virtual.js";
+      import {createVirtualElement, createApplication} from "https://cdn.jsdelivr.net/gh/aminnairi/virtual/build/virtual.module.js";
     </script>
   </body>
 </html>
@@ -550,7 +550,7 @@ curl -O /path/to/your/project/virtual.js https://github.com/aminnairi/virtual/tr
 <!DOCTYPE html>
 <html>
   <body>
-    <script src="https://cdn.jsdelivr.net/gh/aminnairi/virtual/build/virtual.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/aminnairi/virtual/build/virtual.browser.js"></script>
     <script>
       const {createVirtualElement, createApplication} = window["@aminnairi/virtual"];
     </script>
