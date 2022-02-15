@@ -1,6 +1,6 @@
 # virtual
 
-![Logo](./sources/images/logo.png)
+<img src="./sources/images/logo.png" style="text-align: center; width: 64px: height: 64px;">
 
 Virtual DOM based JavaScript framework for building dynamic websites.
 
