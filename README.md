@@ -86,6 +86,12 @@ createVirtualElement({
 });
 ```
 
+Equivalent to
+
+```html
+<input id="email" type="email" placeholder="Ex: john@doe.com">
+```
+
 #### 5.1.3 Create an element with a text node
 
 ```javascript
