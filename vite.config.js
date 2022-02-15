@@ -15,12 +15,14 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
+// @ts-check
 import {resolve} from "path";
+import {defineConfig} from "vite";
 
-export default {
-  root: resolve("example", "router"),
+export default defineConfig({
+  root: resolve("example"),
   server: {
     port: 8000,
     host: "0.0.0.0"
   }
-};
+});
