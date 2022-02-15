@@ -17,15 +17,27 @@
  */
 import {resolve} from "path";
 import {terser} from "rollup-plugin-terser";
+import remove from "rollup-plugin-delete";
 
 export default {
   input: resolve("sources", "index.js"),
   plugins: [
+    remove({
+      targets: [
+        resolve("build", "**", "*")
+      ]
+    }),
     terser()
   ],
-  output: {
-    file: resolve("build", "virtual.js"),
-    format: "umd",
-    name: "@aminnairi/virtual"
-  }
+  output: [
+    {
+      file: resolve("build", "virtual.browser.js"),
+      format: "umd",
+      name: "@aminnairi/virtual"
+    },
+    {
+      file: resolve("build", "virtual.module.js"),
+      format: "esm"
+    }
+  ]
 };
