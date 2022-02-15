@@ -258,7 +258,10 @@ const main = () => {
     return createVirtualElement({
       key: "home",
       name: "h1",
-      attributes: {},
+      attributes: {
+        onload: () => console.log("Home page loaded"),
+        onunload: () => console.log("Home page unloaded")
+      },
       children: ["Home"]
     });
   }
@@ -267,7 +270,10 @@ const main = () => {
     return createVirtualElement({
       key: "about",
       name: "h1",
-      attributes: {},
+      attributes: {
+        onload: () => console.log("About page loaded"),
+        onunload: () => console.log("About page unloaded")
+      },
       children: ["About"]
     });
   }
@@ -275,7 +281,10 @@ const main = () => {
   return createVirtualElement({
     key: "notfound",
     name: "h1",
-    attributes: {},
+    attributes: {
+      onload: () => console.log("Not found page loaded"),
+      onunload: () => console.log("Not found page unloaded")
+    },
     children: ["Not found"]
   });
 };
