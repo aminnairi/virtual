@@ -47,7 +47,37 @@ createApplication({
 
 ### 5.1 createVirtualElement
 
-#### 5.1.1 Create an element with a text node
+#### 5.1.1 Create an element with no attributes nor children
+
+```javascript
+createVirtualElement({
+  name: "br",
+  attributes: {},
+  children: []
+});
+```
+
+Equivalent to
+
+```html
+<br>
+```
+
+#### 5.1.2 Create an element with attributes
+
+```javascript
+createVirtualElement({
+  name: "input",
+  attributes: {
+    id: "email",
+    type: "email",
+    placeholder: "Ex: john@doe.com"
+  },
+  children: []
+});
+```
+
+#### 5.1.3 Create an element with a text node
 
 ```javascript
 createVirtualElement({
@@ -63,7 +93,7 @@ Equivalent to
 <h1>Hello, world!</h1>
 ```
 
-#### 5.1.2 Create an element with an event
+#### 5.1.4 Create an element with an event
 
 ```javascript
 createVirtualElement({
@@ -83,7 +113,7 @@ Equivalent to
 <button onclick="() => console.log('Hello');">Click</button>
 ```
 
-#### 5.1.3 Create an element with multiple children
+#### 5.1.5 Create an element with multiple children
 
 ```javascript
 createVirtualElement({
@@ -119,7 +149,7 @@ Equivalent to
 </ul>
 ```
 
-#### 5.1.4 Create an element with a CSS class
+#### 5.1.6 Create an element with a CSS class
 
 ```javascript
 createVirtualElement({
@@ -137,7 +167,7 @@ Equivalent to
 <p class="text-center text-red">Hello, world!</p>
 ```
 
-#### 5.1.5 Create an input with a label
+#### 5.1.7 Create an input with a label
 
 ```javascript
 createVirtualElement({
@@ -189,7 +219,49 @@ createApplication({
 });
 ```
 
-#### 5.2.2 State
+#### 5.2.2 Ternary condition
+
+```javascript
+createApplication({
+  element: document.getElementById("application"),
+  state: {},
+  update: state => state,
+  view: () => createVirtualElement({
+    name: "div",
+    attributes: {},
+    children: [
+      window.location.pathname === "/" ? createVirtualElement({
+        name: "h1",
+        attributes: {},
+        children: ["Hello"]
+      }) : null;
+    ]
+  })
+});
+```
+
+#### 5.2.3 Short-circuit condition
+
+```javascript
+createApplication({
+  element: document.getElementById("application"),
+  state: {},
+  update: state => state,
+  view: () => createVirtualElement({
+    name: "div",
+    attributes: {},
+    children: [
+      window.location.pathname === "/" && createVirtualElement({
+        name: "h1",
+        attributes: {},
+        children: ["Hello"]
+      });
+    ]
+  })
+});
+```
+
+#### 5.2.4 State
 
 ```javascript
 createApplication({
@@ -218,7 +290,7 @@ createApplication({
 });
 ```
 
-#### 5.2.3 Update
+#### 5.2.5 Update
 
 ```javascript
 createApplication({
@@ -256,7 +328,7 @@ createApplication({
 });
 ```
 
-#### 5.2.4 Side effects
+#### 5.2.6 Side effects
 
 ```javascript
 const go = route => {
