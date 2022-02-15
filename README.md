@@ -47,7 +47,7 @@ createApplication({
 #### Create an element with a text node
 
 ```javascript
-const title = createVirtualElement({
+createVirtualElement({
   name: "h1",
   attributes: {},
   children: ["Hello, world!"]
@@ -64,7 +64,7 @@ Equivalent to
 
 ```javascript
 // <button onclick="() => console.log('Hello');">Click</button>
-const button = createVirtualElement({
+createVirtualElement({
   name: "button",
   attributes: {
     onclick: () => {
@@ -79,6 +79,273 @@ Equivalent to
 
 ```html
 <button onclick="() => console.log('Hello');">Click</button>
+```
+
+## Create an element with multiple children
+
+```javascript
+createVirtualElement({
+  name: "ul",
+  attributes: {},
+  children: [
+    createVirtualElement({
+      name: "li",
+      attributes: {},
+      children: ["HTML"]
+    }),
+    createVirtualElement({
+      name: "li",
+      attributes: {},
+      children: ["CSS"]
+    }),
+    createVirtualElement({
+      name: "li",
+      attributes: {},
+      children: ["JavaScript"]
+    })
+  ]
+});
+```
+
+Equivalent to
+
+```html
+<ul>
+  <li>HTML</li>
+  <li>CSS</li>
+  <li>JavaScript</li>
+</ul>
+```
+
+#### Create an element with a CSS class
+
+```javascript
+createVirtualElement({
+  name: "p",
+  attributes: {
+    className: "text-center text-red"
+  },
+  children: ["Hello, world!"]
+});
+```
+
+Equivalent to
+
+```html
+<p class="text-center text-red">Hello, world!</p>
+```
+
+#### Create an input with a label
+
+```javascript
+createVirtualElement({
+  name: "div",
+  attributes: {},
+  children: [
+    createVirtualElement({
+      name: "label",
+      attributes: {
+        htmlFor: "email"
+      },
+      children: ["Email"]
+    }),
+    createVirtualElement({
+      name: "input",
+      attributes: {
+        id: "email",
+        placeholder: "Ex: john@doe.com"
+      },
+      children: []
+    })
+  ]
+})
+```
+
+Equivalent to
+
+```html
+<div>
+  <label for="email">Email</label>
+  <input id="email" placeholder="Ex: john@doe.com">
+</div>
+```
+
+### createApplication
+
+#### Simple application
+
+```javascript
+createApplication({
+  element: document.getElementById("application"),
+  state: {},
+  update: state => state,
+  view: () => createVirtualElement({
+    name: "h1",
+    attributes: {},
+    children: ["Hello, world!"]
+  })
+});
+```
+
+#### State
+
+```javascript
+createApplication({
+  element: document.getElementById("application"),
+  state: {
+    title: "Hello, world!",
+    dayOfWeek: 3
+  },
+  update: state => state,
+  view: (state) => createVirtualElement({
+    name: "div",
+    attributes: {},
+    children: [
+      createVirtualElement({
+        name: "h1",
+        attributes: {},
+        children: [state.title]
+      }),
+      createVirtualElement({
+        name: "p",
+        attributes: {},
+        children: [String(state.dayOfWeek)]
+      })
+    ]
+  })
+});
+```
+
+#### Update
+
+```javascript
+createApplication({
+  element: document.getElementById("application"),
+  state: {
+    counter: 0
+  },
+  update: (state, {type, payload}) => {
+    switch (type) {
+      case "INCREASE":
+        return {...state, counter: state.counter + 1};
+
+      default:
+        return state;
+    }
+  },
+  view: (state, update) => createVirtualElement({
+    name: "div",
+    attributes: {},
+    children: [
+      createVirtualElement({
+        name: "button",
+        attributes: {
+          onclick: () => update({type: "INCREASE", payload: null})
+        },
+        children: ["Increase"]
+      }),
+      createVirtualElement({
+        name: "p",
+        attributes: {},
+        children: [`Counter is ${state.counter}`]
+      })
+    ]
+  })
+});
+```
+
+#### Side effects
+
+```javascript
+const go = route => {
+  window.history.pushState(null, null, route);
+  window.dispatchEvent(new CustomEvent("route"));
+};
+
+const dispatch = createApplication({
+  element: document.getElementById("application"),
+  state: {
+    route: window.location.pathname
+  },
+  update: (state, {type, payload}) => {
+    switch (type) {
+      case "ROUTE_CHANGED":
+        return {...state, route: payload};
+
+      default:
+        return state;
+    }
+  },
+  view: (state, update) => createVirtualElement({
+    name: "div",
+    attributes: {},
+    children: [
+      createVirtualElement({
+        name: "header",
+        attributes: {},
+        children: [
+          createVirtualElement({
+            name: "ul",
+            attributes: {},
+            children: [
+              createVirtualElement({
+                name: "li",
+                attributes: {
+                  onclick: () => go("/")
+                },
+                children: ["Home"]
+              }),
+              createVirtualElement({
+                name: "li",
+                attributes: {
+                  onclick: () => go("/contact")
+                },
+                children: ["Contact"]
+              }),
+              createVirtualElement({
+                name: "li",
+                attributes: {
+                  onclick: () => go("/about")
+                },
+                children: ["About"]
+              })
+            ]
+          })
+        ]
+      }),
+      createVirtualElement({
+        name: "main",
+        attributes: {},
+        children: [
+          state.route === "/" ? createVirtualElement({
+            name: "h1",
+            attributes: {},
+            children: ["Home"]
+          }) : state.route === "/about" ? createVirtualElement({
+            name: "h1",
+            attributes: {},
+            children: ["About"]
+          }) : createVirtualElement({
+            name: "h1",
+            attributes: {},
+            children: ["Not found"]
+          })
+        ]
+      })
+    ]
+  })
+});
+
+window.addEventListener("popstate", () => {
+  window.dispatchEvent(new CustomEvent("route"));
+});
+
+window.addEventListener("route", () => {
+  dispatch({
+    type: "ROUTE_CHANGED",
+    payload: window.location.pathname
+  });
+});
 ```
 
 ## Installation
