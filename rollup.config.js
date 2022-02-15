@@ -24,7 +24,7 @@ export default {
     terser()
   ],
   output: {
-    file: resolve("build", "index.js"),
+    file: resolve("build", "virtual.js"),
     format: "umd",
     name: "@aminnairi/virtual"
   }
