@@ -60,7 +60,7 @@ Equivalent to
 <h1>Hello, world!</h1>
 ```
 
-### Create an element with an event
+#### Create an element with an event
 
 ```javascript
 createVirtualElement({
