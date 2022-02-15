@@ -141,18 +141,16 @@ const createPatch = (oldVirtualElement, newVirtualElement) => {
       return;
     }
 
-    if (oldVirtualElement.key !== newVirtualElement.key) {
+    if (oldVirtualElement.name !== newVirtualElement.name) {
       unload(oldVirtualElement);
       htmlElement.replaceChild(render(newVirtualElement), oldElement);
       load(newVirtualElement);
       return;
     }
 
-    if (oldVirtualElement.name !== newVirtualElement.name) {
+    if (oldVirtualElement.key !== newVirtualElement.key) {
       unload(oldVirtualElement);
-      htmlElement.replaceChild(render(newVirtualElement), oldElement);
       load(newVirtualElement);
-      return;
     }
 
     Object.entries(oldVirtualElement.attributes).forEach(([oldAttributeName, oldAttributeValue]) => {
