@@ -8,7 +8,7 @@ This is just an exploration of mine, this wont be a big thing. Use it at your ow
 
 ## 2 Reasons to use
 
-- Only weights 6 Ko unminified, 3 Ko minified, and 2 Ko minified + gzipped.
+- Only weights 6K unminified, 3K minified, and 1.5K minified + gzipped.
 - Source-code open and readable for humans.
 - No JSX and thus can be used with a CDN anywhere.
 - You like functional programming.
