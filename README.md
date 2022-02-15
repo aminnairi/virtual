@@ -28,19 +28,28 @@ This is just an exploration of mine, this wont be a big thing. This library is s
 
 ## 4 Usage
 
-```javascript
-import {createVirtualElement, createApplication} from "/path/to/virtual.js";
+```html
+<!DOCTYPE html>
+<html>
+  <body>
+    <div id="application"></div>
+    <script src="https://cdn.jsdelivr.net/gh/aminnairi/virtual/build/virtual.browser.js"></script>
+    <script>
+      const {createVirtualElement, createApplication} = window["@aminnairi/virtual"];
 
-createApplication({
-  element: document.getElementById("element")
-  state: {},
-  update: state => state,
-  view: () => createVirtualElement({
-    name: "h1",
-    attributes: {},
-    children: ["Hello, world!"]
-  }),
-});
+      createApplication({
+        element: document.getElementById("application"),
+        state: {},
+        update: state => state,
+        view: () => createVirtualElement({
+          name: "h1",
+          attributes: {},
+          children: ["Hello, world!"]
+        })
+      });
+    </script>
+  </body>
+</html>
 ```
 
 ## 5 API
