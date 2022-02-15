@@ -604,7 +604,7 @@ curl -O /path/to/your/project/virtual.js https://github.com/aminnairi/virtual/tr
 - The plugin should be open for issues.
 - The plugin should be targeting ECMAScript Modules & Browsers (and optionally Node).
 
-## 7 Todo
+## 8 Todo
 
 - [X] Virtual DOM creation algorithm
 - [X] DOM diffing
