@@ -16,23 +16,24 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 //@ts-check
-import {string, element, virtualElement, nil} from "./typing.js";
+import {isString, isElement, isVirtualElement, isNullOrUndefined, isCallable} from "./typing.js";
 
-export const createVirtualElement = ({name, attributes, children}) => {
+export const createVirtualElement = ({name, key, attributes, children}) => {
   return {
     identifier: window.crypto.randomUUID(),
     name,
+    key,
     attributes,
     children
   };
 };
 
 const render = (options) => {
-  if (string(options)) {
+  if (isString(options)) {
     return document.createTextNode(options);
   }
 
-  if (!virtualElement(options)) {
+  if (!isVirtualElement(options)) {
     return;
   }
 
@@ -53,23 +54,48 @@ const render = (options) => {
   return element;
 };
 
+const load = newVirtualElement => {
+  if (isVirtualElement(newVirtualElement)) {
+    if (isCallable(newVirtualElement.attributes.onload)) {
+      newVirtualElement.attributes.onload();
+    }
+
+    newVirtualElement.children.forEach(child => {
+      load(child);
+    });
+  }
+};
+
+const unload = (newVirtualElement) => {
+  if (isVirtualElement(newVirtualElement)) {
+    if (isCallable(newVirtualElement.attributes.onunload)) {
+      newVirtualElement.attributes.onunload();
+    }
+
+    newVirtualElement.children.forEach(child => {
+      unload(child);
+    });
+  }
+};
+
 const createPatch = (oldVirtualElement, newVirtualElement) => {
   return htmlElement => {
-    if (nil(htmlElement)) {
+    if (isNullOrUndefined(htmlElement)) {
       return;
     }
 
-    if (nil(oldVirtualElement)) {
-      if (!nil(newVirtualElement)) {
+    if (isNullOrUndefined(oldVirtualElement)) {
+      if (!isNullOrUndefined(newVirtualElement)) {
         htmlElement.appendChild(render(newVirtualElement));
+        load(newVirtualElement);
         return;
       }
 
       return;
     }
 
-    if (string(oldVirtualElement)) {
-      if (string(newVirtualElement)) {
+    if (isString(oldVirtualElement)) {
+      if (isString(newVirtualElement)) {
         if (oldVirtualElement === newVirtualElement) {
           return;
         }
@@ -78,54 +104,64 @@ const createPatch = (oldVirtualElement, newVirtualElement) => {
         return;
       }
 
-      if (nil(newVirtualElement)) {
+      if (isNullOrUndefined(newVirtualElement)) {
         htmlElement.innerText = "";
         return;
       }
 
       htmlElement.innerHTML = "";
       htmlElement.appendChild(render(newVirtualElement));
+      load(newVirtualElement);
       return;
     }
 
-    if (!virtualElement(oldVirtualElement)) {
+    if (!isVirtualElement(oldVirtualElement)) {
       return;
     }
 
     const oldElement = document.querySelector(`[data-virtual="${oldVirtualElement.identifier}"]`);
 
-    if (!element(oldElement)) {
+    if (!isElement(oldElement)) {
       return;
     }
 
-    if (nil(newVirtualElement)) {
+    if (isNullOrUndefined(newVirtualElement)) {
+      unload(newVirtualElement);
       htmlElement.removeChild(oldElement);
       return;
     }
 
-    if (string(newVirtualElement)) {
+    if (isString(newVirtualElement)) {
       htmlElement.innerHTML = "";
       htmlElement.innerText = newVirtualElement;
       return;
     }
 
-    if (!virtualElement(newVirtualElement)) {
+    if (!isVirtualElement(newVirtualElement)) {
+      return;
+    }
+
+    if (oldVirtualElement.key !== newVirtualElement.key) {
+      unload(oldVirtualElement);
+      htmlElement.replaceChild(render(newVirtualElement), oldElement);
+      load(newVirtualElement);
       return;
     }
 
     if (oldVirtualElement.name !== newVirtualElement.name) {
+      unload(oldVirtualElement);
       htmlElement.replaceChild(render(newVirtualElement), oldElement);
+      load(newVirtualElement);
       return;
     }
 
     Object.entries(oldVirtualElement.attributes).forEach(([oldAttributeName, oldAttributeValue]) => {
       const newAttributeValue = newVirtualElement.attributes[oldAttributeName];
 
-      if (nil(newAttributeValue)) {
+      if (isNullOrUndefined(newAttributeValue)) {
         oldElement.removeAttribute(oldAttributeName);
         return;
       }
-
 
       if (oldAttributeValue !== newAttributeValue) {
         oldElement[oldAttributeName] = newAttributeValue;
@@ -135,7 +171,7 @@ const createPatch = (oldVirtualElement, newVirtualElement) => {
     Object.entries(newVirtualElement.attributes).forEach(([newAttributeName, newAttributeValue]) => {
       const oldAttributeValue = oldVirtualElement.attributes[newAttributeName];
 
-      if (nil(oldAttributeValue)) {
+      if (isNullOrUndefined(oldAttributeValue)) {
         oldElement[newAttributeName] = newAttributeValue;
       }
     });
