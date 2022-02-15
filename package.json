@@ -1,4 +1,28 @@
 {
+  "author": {
+    "name": "Amin NAIRI",
+    "url": "https://github.com/aminnairi"
+  },
+  "browser": "build/virtual.browser.js",
+  "bugs": {
+    "url": "https://github.com/aminnairi/virtual/issues"
+  },
+  "description": "Virtual DOM based JavaScript library for building dynamic websites.",
+  "files": [
+    "build"
+  ],
+  "homepage": "https://github.com/aminnairi/virtual#readme",
+  "keywords": [
+    "javascript",
+    "dom",
+    "virtual",
+    "virtual-dom",
+    "store"
+  ],
+  "license": "GPL-3.0-or-later",
+  "main": "build/virtual.module.js",
+  "name": "@aminnairi/virtual",
+  "version": "0.1.0",
   "scripts": {
     "start": "vite",
     "build": "rollup --config rollup.config.js"
