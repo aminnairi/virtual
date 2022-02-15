@@ -568,7 +568,6 @@ curl -O /path/to/your/project/virtual.js https://github.com/aminnairi/virtual/tr
 - [ ] Unit tests
 - [ ] NPM library
 - [ ] TypeScript (probably too hard for me but who knows)
-- [ ] State in dispatch
 - [ ] Lunch with Musk when 100k+ stars
 
 ## 9 Contributing
