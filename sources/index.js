@@ -166,7 +166,7 @@ const createPatch = (oldVirtualElement, newVirtualElement) => {
   };
 };
 
-export const createDispatch = (options) => {
+export const createApplication = (options) => {
   let virtualElement = options.view(options.state);
 
   const patch = createPatch(null, virtualElement);
