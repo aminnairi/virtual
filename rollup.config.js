@@ -32,8 +32,9 @@ export default {
   output: [
     {
       file: resolve("build", "virtual.browser.js"),
-      format: "umd",
-      name: "@aminnairi/virtual"
+      format: "iife",
+      name: "@aminnairi/virtual",
+      extend: true
     },
     {
       file: resolve("build", "virtual.module.js"),
