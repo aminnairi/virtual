@@ -624,7 +624,7 @@ curl -O /path/to/your/project/virtual.js https://github.com/aminnairi/virtual/tr
 
 See [`CONTRIBUTING.md`](./CONTRIBUTING.md).
 
-## Code of conduct
+## 10 Code of conduct
 
 See [`CODE_OF_CONDUCT.md`](./CODE_OF_CONDUCT.md).
 
