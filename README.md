@@ -404,6 +404,26 @@ cp build/index.js /path/to/your/project/virtual.js
 - [ ] Add a load handler when creating a virtual element
 - [ ] Add an unload handler when creating a virtual element
 
-## 8 License
+## 8 History
+
+For quite some time I was library & framework hopping, searching for the tool that could suit my needs.
+
+My history started with Vue, which is a framework I love (and still love) because it offers a great user experience for beginners to start. It adds the right amount of abstraction for beginners so that they can be as productive as in other libraries without having to deal with too much stuff.
+
+Then, my need for understanding libraries grew and I started to be wanting more control over my library, so I started using React. At first, I hated it because it was using classes and `this.setState` and all those complicated lifecycle events and my hate was in reality directed towards me because I didn't quite understand those principles like I do today. But the class-based API was not really appealing to me. Then I went back to Vue until React started using hooks. At first, I though this would be a minor change and I was really into functional programming, people have been saying that this is great because it allows for more functional patterns so I started going back to React and I immediately fell in love with the library and never went back to Vue since then.
+
+JSX was a little bit strange to me at first, but when combined with all of the goodies it brings, it was really a breeze to use. Since there are less magic than Vue, I found what I needed, which was a library that helps getting rid of the complicated things and at that time, the complicated things was the DOM manipulation. But I was also starting to love writing vanilla JavaScript and got to understand better the DOM API with its events and such.
+
+But my hunger for knowledge was really starting to howl as I used React, I really wanted to know why this library weighted so much so I started digging around concepts like Virtual DOM (WTF???) and diffing and patching and I was like ooooookay, but why so much weight? And then I stumbled accross Preact, which is a clone of React (in the concept) but with a way (like waaaaaaay) smaller size (3Kb or so). And I was like okay, the guy behind Preact has created a fully working library similar to React, but for 3Kb, this must not be that difficult.
+
+And since then, I started trying to create diffing algorithms for virtual DOMs, trying to find the algorithm that suited my way of thinking, trying to understand how it worked, and here we are. At first, this project was just the DOM diffing and patching. And since I was in love with functional programming, at the time I was also starting to use Elm. I must say, this language is incredible, I never felt so protected around that layer of types and paradigms. But the only thing that kept me from being a full-time Elm developper is the JavaScript interop. Because it used too much advanced concepts for me and I'm not that smart after all.
+
+So I started to be listing my needs: a framework that wasn't involving too much things (like JSX is out of the way because I want this library to be used in a CDN). But I also want the expressiveness and expliciteness of the functional programming and all of its benefits, while still abstracting the hard part, which is the DOM manipulation and these kind of side effects. So I started to build a wrapper around the diffing and patching algorithms that I created and came up with this design.
+
+I don't really care about the popularity of this library. In fact, I don't even want it to be popular. This repository is private for now and I don't even know if it will ever become public one day. For now, it suits my needs well.
+
+And I started to realize that nowadays, some people are arguing and even fighting about what is the best framework and I though this is a dumb fight. There is, and there will never be the best framework that can do it all because it would mean that such framework will have so much compromises and that's not even good. There is only a framework that suits your needs, match your way of think, match the goal you are trying to reach, etc... You must be in complete agreement with the library or framework you are using, or start making your own.
+
+## 9 License
 
 See [License](./LICENSE).
