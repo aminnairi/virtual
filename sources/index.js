@@ -167,19 +167,21 @@ const createPatch = (oldVirtualElement, newVirtualElement) => {
 };
 
 export const createApplication = (options) => {
-  let virtualElement = options.view(options.state);
-
-  const patch = createPatch(null, virtualElement);
-  patch(options.element);
+  let virtualElement;
 
   const dispatch = ({type, payload}) => {
     const newState = options.update(options.state, {type, payload});
-    const newVirtualElement = options.view(newState);
+    const newVirtualElement = options.view(newState, dispatch);
     const innerPatch = createPatch(virtualElement, newVirtualElement);
     innerPatch(options.element);
     virtualElement = newVirtualElement;
     options.state = newState;
   };
+
+  virtualElement = options.view(options.state, dispatch);
+
+  const patch = createPatch(null, virtualElement);
+  patch(options.element);
 
   return dispatch;
 };
