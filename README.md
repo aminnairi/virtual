@@ -26,9 +26,9 @@ Virtual DOM based JavaScript framework for building dynamic websites.
 ## Usage
 
 ```javascript
-import {createVirtualElement, createDispatch} from "@aminnairi/virtual";
+import {createVirtualElement, createApplication} from "@aminnairi/virtual";
 
-createDispatch({
+createApplication({
   element: document.getElementById("element")
   state: {},
   update: state => state,
@@ -79,28 +79,7 @@ docker-compose run --rm npm run build
 
 ```bash
 cp build/index.js /path/to/your/project/virtual.js
-cd /path/to/your/project
-touch index.js
 ```
-
-```javascript
-import {createDispatch, createVirtualElement} from "./virtual.js";
-
-createDispatch({
-  element: document.getElementById("element"),
-  state: {},
-  update: state => state,
-  view: () => createVirtualElement({
-    name: "p",
-    attributes: {},
-    children: ["Hello, from @aminnairi/virtual!"]
-  })
-});
-```
-
-## Example
-
-See [`example`](./example).
 
 ## Todo
 
@@ -112,7 +91,9 @@ See [`example`](./example).
 - [ ] Explicit runtime errors
 - [ ] Hosted examples
 - [ ] Unit tests
+- [ ] Add a load handler when creating a virtual element
+- [ ] Add an unload handler when creating a virtual element
 
 ## License
 
-See [](./LICENSE).
+See [License](./LICENSE).
