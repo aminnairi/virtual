@@ -4,7 +4,7 @@ Virtual DOM based JavaScript framework for building dynamic websites.
 
 ## 1 Disclaimer
 
-:warning: This is just an exploration of mine, this wont be a big thing. Use it at your own risks. There are still a lot to improve.
+This is just an exploration of mine, this wont be a big thing. Use it at your own risks. See [Todo](#7-todo) for a list of things to come.
 
 ## 2 Reasons to use
 
@@ -200,6 +200,85 @@ Equivalent to
   <label for="email">Email</label>
   <input id="email" placeholder="Ex: john@doe.com">
 </div>
+```
+
+#### 5.1.8 Load
+
+```javascript
+createVirtualElement({
+  name: "p",
+  attributes: {
+    onload: () => console.log("Just after being added to the DOM")
+  },
+  children: ["This is a paragraph."]
+});
+```
+
+#### 5.1.9 Unload
+
+```javascript
+createVirtualElement({
+  name: "p",
+  attributes: {
+    onunload: () => console.log("Just before being removed from the DOM")
+  },
+  children: ["This is a paragraph."]
+});
+```
+
+#### 5.1.10 component
+
+```javascript
+const home = () => {
+  return createVirtualElement({
+    name: "h1",
+    attributes: {},
+    children: ["Home"]
+  });
+};
+
+const main = () => {
+  return createVirtualElement({
+    name: "main",
+    attributes: {},
+    children: [
+      home()
+    ]
+  });
+};
+```
+
+#### 5.1.11 Key
+
+```javascript
+const main = () => {
+  const route = window.location.pathname;
+
+  if (route === "/") {
+    return createVirtualElement({
+      key: "home",
+      name: "h1",
+      attributes: {},
+      children: ["Home"]
+    });
+  }
+
+  if (route === "/about") {
+    return createVirtualElement({
+      key: "about",
+      name: "h1",
+      attributes: {},
+      children: ["About"]
+    });
+  }
+
+  return createVirtualElement({
+    key: "notfound",
+    name: "h1",
+    attributes: {},
+    children: ["Not found"]
+  });
+};
 ```
 
 ### 5.2 createApplication
@@ -469,13 +548,15 @@ cp build/index.js /path/to/your/project/virtual.js
 - [X] DOM diffing
 - [X] DOM patching
 - [X] Global TEA-like state
-- [ ] Keying of lists
+- [X] Add a load handler when creating a virtual element
+- [X] Add an unload handler when creating a virtual element
+- [X] Keying of lists
 - [ ] Explicit runtime errors
 - [ ] Hosted examples
 - [ ] Unit tests
-- [ ] Add a load handler when creating a virtual element
-- [ ] Add an unload handler when creating a virtual element
 - [ ] Readonly callback arguments
+- [ ] NPM library
+- [ ] Lunch with Musk when 100k+ stars
 
 ## 9 License
 
