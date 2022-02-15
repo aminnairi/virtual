@@ -512,43 +512,50 @@ window.addEventListener("route", () => {
 
 ## 6 Installation
 
-### 6.1 NPM
-
-Comming soon.
-
-### 6.2 Local
-
-#### 6.2.1 Requirements
-
-- Git
-- Node
-- NPM
-- Docker (optional)
-- Docker Compose (optional)
-
-#### 6.2.2 Clone
+### 6.1 Local
 
 ```bash
-git clone https://github.com/aminnairi/virtual.git
-cd virtual
+curl -O /path/to/your/project/virtual.js https://github.com/aminnairi/virtual/tree/development/build/virtual.js
 ```
 
-#### 6.2.3 Build
+### 6.2 CDN with ECMAScript Module
 
-```bash
-npm run build
+```html
+<!DOCTYPE html>
+<html>
+  <body>
+    <script type="module">
+      import {createVirtualElement, createApplication} from "https://cdn.jsdelivr.net/gh/aminnairi/virtual/build/virtual.js";
+    </script>
+  </body>
+</html>
 ```
 
-or
+### 6.3 CDN with ECMAScript Module
 
-```bash
-docker-compose run --rm npm run build
+```html
+<!DOCTYPE html>
+<html>
+  <body>
+    <script type="module">
+      import {createVirtualElement, createApplication} from "https://cdn.jsdelivr.net/gh/aminnairi/virtual/build/virtual.js";
+    </script>
+  </body>
+</html>
 ```
 
-#### 6.2.4 Usage
+### 6.3 CDN without ECMAScript Module
 
-```bash
-cp build/index.js /path/to/your/project/virtual.js
+```html
+<!DOCTYPE html>
+<html>
+  <body>
+    <script src="https://cdn.jsdelivr.net/gh/aminnairi/virtual/build/virtual.js"></script>
+    <script>
+      const {createVirtualElement, createApplication} = window["@aminnairi/virtual"];
+    </script>
+  </body>
+</html>
 ```
 
 ## 7 Todo
