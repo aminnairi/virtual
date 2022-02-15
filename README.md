@@ -26,7 +26,7 @@ Virtual DOM based JavaScript framework for building dynamic websites.
 ## Usage
 
 ```javascript
-import {createVirtualElement, createApplication} from "@aminnairi/virtual";
+import {createVirtualElement, createApplication} from "/path/to/virtual.js";
 
 createApplication({
   element: document.getElementById("element")
