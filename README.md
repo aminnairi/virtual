@@ -1,5 +1,7 @@
 # virtual
 
+![Logo](./sources/images/logo.png)
+
 Virtual DOM based JavaScript framework for building dynamic websites.
 
 ## 1 Disclaimer
