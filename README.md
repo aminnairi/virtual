@@ -33,9 +33,8 @@ This is just an exploration of mine, this wont be a big thing. This library is s
 <html>
   <body>
     <div id="application"></div>
-    <script src="https://cdn.jsdelivr.net/gh/aminnairi/virtual/build/virtual.browser.js"></script>
-    <script>
-      const {createVirtualElement, createApplication} = window["@aminnairi/virtual"];
+    <script type="module">
+      import {createVirtualElement, createApplication} from "https://cdn.jsdelivr.net/gh/aminnairi/virtual/build/virtual.module.js";
 
       createApplication({
         element: document.getElementById("application"),
@@ -596,6 +595,14 @@ curl -O /path/to/your/project/virtual.js https://github.com/aminnairi/virtual/tr
   </body>
 </html>
 ```
+
+## 7 Code sharing conventions
+
+- The plugin repository should have a name starting with `virtual-name` or `@user/virtual-name` where `user` is your username on a registry and `name` is the name of your project in lower-kebab-case. For instance `@aminnairi/virtual-router`, `@aminnairi/virtual-state-session-storage` or `@aminnairi/virtual-update-local-storage`.
+- The plugin should have a licence GPL-3.0 or later.
+- The plugin should have a documentation.
+- The plugin should be open for issues.
+- The plugin should be targeting ECMAScript Modules & Browsers (and optionally Node).
 
 ## 7 Todo
 
