@@ -537,8 +537,20 @@ curl -O /path/to/your/project/virtual.js https://github.com/aminnairi/virtual/tr
 <!DOCTYPE html>
 <html>
   <body>
+    <div id="application"></div>
     <script type="module">
       import {createVirtualElement, createApplication} from "https://cdn.jsdelivr.net/gh/aminnairi/virtual/build/virtual.module.js";
+
+      createApplication({
+        element: document.getElementById("application"),
+        state: {},
+        update: state => state,
+        view: () => createVirtualElement({
+          name: "h1",
+          attributes: {},
+          children: ["Hello, world!"]
+        })
+      });
     </script>
   </body>
 </html>
@@ -550,9 +562,21 @@ curl -O /path/to/your/project/virtual.js https://github.com/aminnairi/virtual/tr
 <!DOCTYPE html>
 <html>
   <body>
+    <div id="application"></div>
     <script src="https://cdn.jsdelivr.net/gh/aminnairi/virtual/build/virtual.browser.js"></script>
     <script>
       const {createVirtualElement, createApplication} = window["@aminnairi/virtual"];
+
+      createApplication({
+        element: document.getElementById("application"),
+        state: {},
+        update: state => state,
+        view: () => createVirtualElement({
+          name: "h1",
+          attributes: {},
+          children: ["Hello, world!"]
+        })
+      });
     </script>
   </body>
 </html>
