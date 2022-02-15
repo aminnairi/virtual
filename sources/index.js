@@ -15,15 +15,8 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-const string = target => typeof target === "string";
-const nil = target => target === null || target === undefined;
-const element = target => target instanceof Element;
-const plainArray = target => Array.isArray(target);
-const plainObject = target => typeof target === "object" && !plainArray(target) && target !== null;
-const object = (types) => (target) => plainObject(target) && types.every(type => type(target));
-const property = (name, type) => target => plainObject(target) && type(target[name]);
-const array = (type) => target => plainArray(target) && target.every(item => type(item));
-const virtualElement = target => object([property("identifier", string), property("name", string), property("children", array), property("attributes", plainObject)]);
+//@ts-check
+import {string, element, virtualElement, nil} from "./typing.js";
 
 export const createVirtualElement = ({name, attributes, children}) => {
   return {
