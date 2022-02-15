@@ -422,7 +422,8 @@ So I started to be listing my needs: a framework that wasn't involving too much 
 
 I don't really care about the popularity of this library. In fact, I don't even want it to be popular. This repository is private for now and I don't even know if it will ever become public one day. For now, it suits my needs well.
 
-And I started to realize that nowadays, some people are arguing and even fighting about what is the best framework and I though this is a dumb fight. There is, and there will never be the best framework that can do it all because it would mean that such framework will have so much compromises and that's not even good. There is only a framework that suits your needs, match your way of think, match the goal you are trying to reach, etc... You must be in complete agreement with the library or framework you are using, or start making your own.
+And I started to realize that nowadays, some people are arguing and even fighting about what is the best framework and I though this is a dumb fight. There will never be a best framework that can do it all because it would mean that such framework will have so much compromises and that's not even good. There is only a framework that suits your needs, match your way of think, match the goal you are trying to reach, that could be easily read by humans to understand how it worked by using explicit variable names an no cryptic one-letter variable names etc... You must be in complete agreement with the library or framework you are using, or start making your own.
+
 
 ## 9 License
 
