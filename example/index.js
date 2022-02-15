@@ -95,7 +95,16 @@ const dispatch = createApplication({
               onload: () => console.log("Home loaded"),
               onunload: () => console.log("Home unloaded")
             },
-            children: ["Home"]
+            children: [
+              createVirtualElement({
+                name: "span",
+                attributes: {
+                  onload: () => console.log("Home span loaded"),
+                  onunload: () => console.log("Home span unloaded")
+                },
+                children: ["Home"]
+              })
+            ]
           }) : state.route === "/about" ? createVirtualElement({
             name: "h1",
             key: "about",
@@ -103,7 +112,16 @@ const dispatch = createApplication({
               onload: () => console.log("About loaded"),
               onunload: () => console.log("About unloaded")
             },
-            children: ["About"]
+            children: [
+              createVirtualElement({
+                name: "span",
+                attributes: {
+                  onload: () => console.log("About span loaded"),
+                  onunload: () => console.log("About span unloaded")
+                },
+                children: ["About"]
+              })
+            ]
           }) : createVirtualElement({
             name: "h1",
             key: "notfound",
