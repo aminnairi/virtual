@@ -615,8 +615,8 @@ curl -O /path/to/your/project/virtual.js https://github.com/aminnairi/virtual/tr
 - [X] Add a load handler when creating a virtual element
 - [X] Add an unload handler when creating a virtual element
 - [X] Keying
+- [X] Hosted example
 - [ ] Explicit runtime errors
-- [ ] Hosted examples
 - [ ] Unit tests
 - [ ] Readonly callback arguments
 - [ ] NPM library
