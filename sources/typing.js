@@ -16,12 +16,48 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-export const string = target => typeof target === "string";
-export const nil = target => target === null || target === undefined;
-export const element = target => target instanceof Element;
-export const plainArray = target => Array.isArray(target);
-export const plainObject = target => typeof target === "object" && !plainArray(target) && target !== null;
-export const object = (types) => (target) => plainObject(target) && types.every(type => type(target));
-export const property = (name, type) => target => plainObject(target) && type(target[name]);
-export const array = (type) => target => plainArray(target) && target.every(item => type(item));
-export const virtualElement = target => object([property("identifier", string), property("name", string), property("children", array), property("attributes", plainObject)]);
+export const isString = (target) => {
+  return Object.prototype.toString.call(target) === "[object String]";
+};
+
+export const isNullOrUndefined = (target) => {
+  const type = Object.prototype.toString.call(target);
+  return type === "[object Undefined]" || type === "[object Null]";
+};
+
+export const isElement = (target) => {
+  return target instanceof window.Element;
+};
+
+export const isObject = (target) => {
+  return Object.prototype.toString.call(target) === "[object Object]";
+};
+
+export const isObjectOf = (types) => (target) => {
+  return isObject(tagret) && types.every(isType => isType(target));
+};
+
+export const property = (name, type) => target => isObject(target) && type(target[name]);
+
+export const isProperty = (propertyName, isType) => (target) => {
+  return Object.prototype.hasOwnProperty.call(target, propertyName) && isType(target[propertyName]);
+};
+
+export const array = (type) => target => Object.prototype.toString.call(target) === "[object Array]" && target.every(item => type(item));
+
+export const isArray = (target) => {
+  return Object.prototype.toString.call(target) === "[object Array]";
+};
+
+export const isArrayOf = (isType) => (target) => {
+  return isArray(target) && target.every(element => isType(element));
+};
+
+export const isVirtualElement = (target) => {
+  return isObject(target) && isObjectOf([isProperty("identifier", isString), isProperty("name", isString), isProperty("children", isArray), isProperty("attributes", isObject)]);
+};
+
+export const isCallable = (target) => {
+  const type = Object.prototype.toString.call(target);
+  return type === "[object Function]" || type === "[object AsyncFunction]";
+};
