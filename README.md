@@ -63,7 +63,6 @@ Equivalent to
 ### Create an element with an event
 
 ```javascript
-// <button onclick="() => console.log('Hello');">Click</button>
 createVirtualElement({
   name: "button",
   attributes: {
@@ -81,7 +80,7 @@ Equivalent to
 <button onclick="() => console.log('Hello');">Click</button>
 ```
 
-## Create an element with multiple children
+#### Create an element with multiple children
 
 ```javascript
 createVirtualElement({
