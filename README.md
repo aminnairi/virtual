@@ -40,6 +40,47 @@ createApplication({
 });
 ```
 
+## API
+
+### createVirtualElement
+
+#### Create an element with a text node
+
+```javascript
+const title = createVirtualElement({
+  name: "h1",
+  attributes: {},
+  children: ["Hello, world!"]
+});
+```
+
+Equivalent to
+
+```html
+<h1>Hello, world!</h1>
+```
+
+### Create an element with an event
+
+```javascript
+// <button onclick="() => console.log('Hello');">Click</button>
+const button = createVirtualElement({
+  name: "button",
+  attributes: {
+    onclick: () => {
+      console.log("Hello");
+    }
+  },
+  children: ["Click"]
+});
+```
+
+Equivalent to
+
+```html
+<button onclick="() => console.log('Hello');">Click</button>
+```
+
 ## Installation
 
 ### NPM
