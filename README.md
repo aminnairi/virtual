@@ -620,6 +620,14 @@ curl -O /path/to/your/project/virtual.js https://github.com/aminnairi/virtual/tr
 - [ ] NPM library
 - [ ] Lunch with Musk when 100k+ stars
 
-## 9 License
+## 9 Contributing
 
-See [License](./LICENSE).
+See [`CONTRIBUTING.md`](./CONTRIBUTING.md).
+
+## Code of conduct
+
+See [`CODE_OF_CONDUCT.md`](./CODE_OF_CONDUCT.md).
+
+## 11 License
+
+See [`License`](./LICENSE).
