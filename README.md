@@ -10,7 +10,7 @@ This is just an exploration of mine, this wont be a big thing. This library is s
 
 ## 2 Reasons to use
 
-- Only weights 6K unminified, 3K minified, and 1.5K minified + gzipped.
+- Only weights 7K unminified, 4K minified, and 2K minified + gzipped.
 - Source-code open and readable for humans.
 - No JSX and thus can be used with a CDN anywhere.
 - You like functional programming.
