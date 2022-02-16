@@ -18,6 +18,7 @@
 //@ts-check
 import {isString, isElement, isVirtualElement, isNullOrUndefined, isCallable} from "./typing.js";
 import {deepFreeze} from "./security.js";
+import {camelToKebab} from "./casing.js";
 
 export const createVirtualElement = ({name, key, attributes, children}) => {
   return {
@@ -40,9 +41,18 @@ const render = (options) => {
 
   const {identifier, name, attributes, children} = options;
 
-  const element = document.createElement(name);
+  const element = options.attributes.xmlns ? document.createElementNS(options.attributes.xmlns, options.name) : document.createElement(name);
 
   Object.entries(attributes).forEach(([attributeName, attributeValue]) => {
+    if (attributeName === "xmlns") {
+      return;
+    }
+
+    if (options.attributes.xmlns) {
+      element.setAttribute(camelToKebab(attributeName), attributeValue);
+      return;
+    }
+
     element[attributeName] = attributeValue;
   });
 
@@ -163,7 +173,11 @@ const createPatch = (oldVirtualElement, newVirtualElement) => {
       }
 
       if (oldAttributeValue !== newAttributeValue) {
-        oldElement[oldAttributeName] = newAttributeValue;
+        if (newVirtualElement.attributes.xmlns) {
+          oldElement.setAttribute(camelToKebab(oldAttributeName), newAttributeValue);
+        } else {
+          oldElement[oldAttributeName] = newAttributeValue;
+        }
       }
     });
 
@@ -171,7 +185,11 @@ const createPatch = (oldVirtualElement, newVirtualElement) => {
       const oldAttributeValue = oldVirtualElement.attributes[newAttributeName];
 
       if (isNullOrUndefined(oldAttributeValue)) {
-        oldElement[newAttributeName] = newAttributeValue;
+        if (newVirtualElement.attributes.xmlns) {
+          oldElement.setAttribute(camelToKebab(newAttributeName), newAttributeValue);
+        } else {
+          oldElement[newAttributeName] = newAttributeValue;
+        }
       }
     });
 
