@@ -475,26 +475,7 @@ main();
 
 ## 6 Installation
 
-### 6.1 Local
-
-```bash
-curl -O /path/to/your/project/virtual.js https://github.com/aminnairi/virtual/tree/development/build/virtual.js
-```
-
-### 6.2 CDN with ECMAScript Module
-
-```html
-<!DOCTYPE html>
-<html>
-  <body>
-    <script type="module">
-      import {createVirtualElement, createApplication} from "https://cdn.jsdelivr.net/gh/aminnairi/virtual/build/virtual.js";
-    </script>
-  </body>
-</html>
-```
-
-### 6.3 CDN with ECMAScript Module
+### 6.1 CDN with ECMAScript Module
 
 ```html
 <!DOCTYPE html>
@@ -519,7 +500,7 @@ curl -O /path/to/your/project/virtual.js https://github.com/aminnairi/virtual/tr
 </html>
 ```
 
-### 6.3 CDN without ECMAScript Module
+### 6.2 CDN without ECMAScript Module
 
 ```html
 <!DOCTYPE html>
