@@ -572,6 +572,7 @@ main();
 - [X] Hosted example
 - [X] Readonly callback arguments
 - [X] SVG support for element with an `xmlns`
+- [ ] Rendering issues for svg text nodes
 - [ ] Unit tests
 - [ ] Explicit runtime errors
 - [ ] NPM library
