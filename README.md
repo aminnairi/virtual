@@ -218,7 +218,33 @@ Equivalent to
 </div>
 ```
 
-#### 5.1.8 Load
+#### 5.1.8 Create an SVG element with children
+
+```javascript
+createVirtualElement({
+  name: "svg",
+  attributes: {
+    xmlns: "http://www.w3.org/2000/svg",
+    width: "300px",
+    height: "300px"
+  },
+  children: [
+    createVirtualElement({
+      name: "text",
+      attributes: {
+        xmlns: "http://www.w3.org/2000/svg",
+        x: "50px",
+        y: "50px",
+        fontSize: "20px",
+        fill: "red"
+      },
+      children: ["Hello, SVG!"]
+    })
+  ]
+});
+```
+
+#### 5.1.9 Load
 
 ```javascript
 createVirtualElement({
@@ -230,7 +256,7 @@ createVirtualElement({
 });
 ```
 
-#### 5.1.9 Unload
+#### 5.1.10 Unload
 
 ```javascript
 createVirtualElement({
@@ -242,7 +268,7 @@ createVirtualElement({
 });
 ```
 
-#### 5.1.10 component
+#### 5.1.11 component
 
 ```javascript
 const home = () => {
@@ -264,7 +290,7 @@ const main = () => {
 };
 ```
 
-#### 5.1.11 Key
+#### 5.1.12 Key
 
 ```javascript
 const main = () => {
@@ -545,8 +571,9 @@ main();
 - [X] Keying
 - [X] Hosted example
 - [X] Readonly callback arguments
-- [ ] Explicit runtime errors
+- [X] SVG support for element with an `xmlns`
 - [ ] Unit tests
+- [ ] Explicit runtime errors
 - [ ] NPM library
 - [ ] TypeScript (probably too hard for me but who knows)
 - [ ] Lunch with Musk when 100k+ stars
