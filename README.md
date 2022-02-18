@@ -606,6 +606,10 @@ See [`CONTRIBUTING.md`](./CONTRIBUTING.md).
 
 See [`CODE_OF_CONDUCT.md`](./CODE_OF_CONDUCT.md).
 
-## 11 License
+## 11 Changelog
+
+See [`CHANGELOG.md`](./CHANGELOG.md).
+
+## 12 License
 
 See [`License`](./LICENSE).
