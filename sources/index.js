@@ -111,12 +111,12 @@ const createPatch = (oldVirtualElement, newVirtualElement) => {
           return;
         }
 
-        htmlElement.innerText = newVirtualElement;
+        htmlElement.textContent = newVirtualElement;
         return;
       }
 
       if (isNullOrUndefined(newVirtualElement)) {
-        htmlElement.innerText = "";
+        htmlElement.textContent = "";
         return;
       }
 
@@ -144,7 +144,7 @@ const createPatch = (oldVirtualElement, newVirtualElement) => {
 
     if (isString(newVirtualElement)) {
       htmlElement.innerHTML = "";
-      htmlElement.innerText = newVirtualElement;
+      htmlElement.textContent = newVirtualElement;
       return;
     }
 
