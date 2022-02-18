@@ -332,6 +332,25 @@ const main = () => {
 };
 ```
 
+#### 5.1.13 Rendering list of elements
+
+```javascript
+const fruits = ["Banana", "Apple", "Pear"];
+
+createVirtualElement({
+  name: "ul",
+  attributes: {},
+  children: fruits.map((fruitName, fruitIndex) => {
+    return createVirtualElement({
+      key: fruitIndex,
+      name: "li",
+      attributes: {},
+      children: [fruitName]
+    });
+  })
+});
+```
+
 ### 5.2 createApplication
 
 #### 5.2.1 Simple application
