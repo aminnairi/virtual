@@ -21,7 +21,20 @@ export const about = (state, update) => {
   return createVirtualElement({
     key: "about",
     name: "div",
-    attributes: {},
+    attributes: {
+      onbeforeload: () => {
+        console.log("About page is about to be loaded...");
+      },
+      onafterload: () => {
+        console.log("...about page is loaded.");
+      },
+      onbeforeunload: () => {
+        console.log("About page is about to be unloaded...");
+      },
+      onafterunload: () => {
+        console.log("...about page is unloaded.");
+      }
+    },
     children: [
       createVirtualElement({
         name: "h1",
