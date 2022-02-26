@@ -617,6 +617,7 @@ main();
 - [X] SVG support for element with an `xmlns`
 - [X] onbeforeload, onbeforeunload, documentation
 - [ ] Asynchronous lifecycle events for animations
+- [ ] createVirtualSvgElement
 - [ ] Unit tests
 - [ ] Explicit runtime errors
 - [ ] NPM library
