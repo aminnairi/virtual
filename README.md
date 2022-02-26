@@ -618,7 +618,9 @@ main();
 - [X] onbeforeload, onbeforeunload, documentation
 - [ ] Asynchronous lifecycle events for animations
 - [ ] createVirtualSvgElement
+- [ ] Element reference in lifecycle events
 - [ ] error when rendering something other than a string or virtualElement
+- [ ] events for SVG elements
 - [ ] Unit tests
 - [ ] Explicit runtime errors
 - [ ] NPM library
