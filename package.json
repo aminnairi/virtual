@@ -1,4 +1,7 @@
 {
+  "publishConfig": {
+    "registry": "npm.pkg.github.com/aminnairi"
+  },
   "author": {
     "name": "Amin NAIRI",
     "url": "https://github.com/aminnairi"
@@ -21,6 +24,7 @@
   ],
   "license": "GPL-3.0-or-later",
   "main": "build/virtual.module.js",
+  "module": "build/virtual.module.js",
   "name": "@aminnairi/virtual",
   "version": "0.1.0",
   "scripts": {
