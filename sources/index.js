@@ -121,8 +121,9 @@ const createPatch = (oldVirtualElement, newVirtualElement) => {
 
     if (isNullOrUndefined(oldVirtualElement)) {
       if (!isNullOrUndefined(newVirtualElement)) {
+        onbeforeload(newVirtualElement);
         htmlElement.appendChild(render(newVirtualElement));
-        load(newVirtualElement);
+        onafterload(newVirtualElement);
         return;
       }
 
@@ -145,8 +146,9 @@ const createPatch = (oldVirtualElement, newVirtualElement) => {
       }
 
       htmlElement.innerHTML = "";
+      onbeforeload(newVirtualElement);
       htmlElement.appendChild(render(newVirtualElement));
-      load(newVirtualElement);
+      onafterload(newVirtualElement);
       return;
     }
 
@@ -161,8 +163,9 @@ const createPatch = (oldVirtualElement, newVirtualElement) => {
     }
 
     if (isNullOrUndefined(newVirtualElement)) {
-      unload(newVirtualElement);
+      onbeforeunload(newVirtualElement);
       htmlElement.removeChild(oldElement);
+      onafterunload(newVirtualElement);
       return;
     }
 
