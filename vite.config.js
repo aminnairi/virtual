@@ -20,7 +20,7 @@ import {resolve} from "path";
 import {defineConfig} from "vite";
 
 export default defineConfig({
-  root: resolve("example"),
+  root: resolve("sources", "example"),
   server: {
     port: 8000,
     host: "0.0.0.0"
