@@ -65,26 +65,50 @@ const render = (options) => {
   return element;
 };
 
-const load = newVirtualElement => {
+const onbeforeload = newVirtualElement => {
   if (isVirtualElement(newVirtualElement)) {
-    if (isCallable(newVirtualElement.attributes.onload)) {
-      newVirtualElement.attributes.onload();
+    if (isCallable(newVirtualElement.attributes.onbeforeload)) {
+      newVirtualElement.attributes.onbeforeload();
     }
 
     newVirtualElement.children.forEach(child => {
-      load(child);
+      onbeforeload(child);
     });
   }
 };
 
-const unload = (newVirtualElement) => {
+const onafterload = newVirtualElement => {
   if (isVirtualElement(newVirtualElement)) {
-    if (isCallable(newVirtualElement.attributes.onunload)) {
-      newVirtualElement.attributes.onunload();
+    if (isCallable(newVirtualElement.attributes.onafterload)) {
+      newVirtualElement.attributes.onafterload();
     }
 
     newVirtualElement.children.forEach(child => {
-      unload(child);
+      onafterload(child);
+    });
+  }
+};
+
+const onbeforeunload = (newVirtualElement) => {
+  if (isVirtualElement(newVirtualElement)) {
+    if (isCallable(newVirtualElement.attributes.onbeforeunload)) {
+      newVirtualElement.attributes.onbeforeunload();
+    }
+
+    newVirtualElement.children.forEach(child => {
+      onbeforeunload(child);
+    });
+  }
+};
+
+const onafterunload = (newVirtualElement) => {
+  if (isVirtualElement(newVirtualElement)) {
+    if (isCallable(newVirtualElement.attributes.onafterunload)) {
+      newVirtualElement.attributes.onafterunload();
+    }
+
+    newVirtualElement.children.forEach(child => {
+      onafterunload(child);
     });
   }
 };
@@ -153,9 +177,11 @@ const createPatch = (oldVirtualElement, newVirtualElement) => {
     }
 
     if (oldVirtualElement.name !== newVirtualElement.name || oldVirtualElement.key !== newVirtualElement.key) {
-      unload(oldVirtualElement);
+      onbeforeunload(oldVirtualElement);
+      onbeforeload(newVirtualElement);
       htmlElement.replaceChild(render(newVirtualElement), oldElement);
-      load(newVirtualElement);
+      onafterunload(oldVirtualElement);
+      onafterload(newVirtualElement);
       return;
     }
 
