@@ -6,7 +6,7 @@ Virtual DOM based JavaScript library for building dynamic websites.
 
 ## 1 Disclaimer
 
-This is just an exploration of mine, this wont be a big thing. This library is still at its early stage so use it at your own risks. See [Todo](#7-todo) for a list of things to come.
+This is just an exploration of mine, this wont be a big thing. This library is still at its early stage so use it at your own risks. See [Todo](#8-todo) for a list of things to come.
 
 ## 2 Reasons to use
 
@@ -14,7 +14,7 @@ This is just an exploration of mine, this wont be a big thing. This library is s
 - Source-code open and readable for humans.
 - No JSX and thus can be used with a CDN anywhere.
 - You like functional programming.
-- Not that much stars of users so you can say "I was there" one day.
+- Not that much stars or users so you can say "I was there" one day.
 - TEA architecture for handling states and updates.
 - Best user experience when used with RxJS, Loadash, Ramda, Underscore, ...
 - Best user experience when used with TailwindCSS.
@@ -244,31 +244,55 @@ createVirtualElement({
 });
 ```
 
-#### 5.1.9 Load
+#### 5.1.9 Before load
 
 ```javascript
 createVirtualElement({
   name: "p",
   attributes: {
-    onload: () => console.log("Just after being added to the DOM")
+    onbeforeload: () => console.log("Just before being added to the DOM")
   },
   children: ["This is a paragraph."]
 });
 ```
 
-#### 5.1.10 Unload
+#### 5.1.10 Before unload
 
 ```javascript
 createVirtualElement({
   name: "p",
   attributes: {
-    onunload: () => console.log("Just before being removed from the DOM")
+    onbeforeunload: () => console.log("Just before being removed from the DOM")
   },
   children: ["This is a paragraph."]
 });
 ```
 
-#### 5.1.11 component
+#### 5.1.11 After load
+
+```javascript
+createVirtualElement({
+  name: "p",
+  attributes: {
+    onafterload: () => console.log("Just after being added to the DOM")
+  },
+  children: ["This is a paragraph."]
+});
+```
+
+#### 5.1.12 After unload
+
+```javascript
+createVirtualElement({
+  name: "p",
+  attributes: {
+    onafterunload: () => console.log("Just after being removed from the DOM")
+  },
+  children: ["This is a paragraph."]
+});
+```
+
+#### 5.1.13 component
 
 ```javascript
 const home = () => {
@@ -290,7 +314,7 @@ const main = () => {
 };
 ```
 
-#### 5.1.12 Key
+#### 5.1.14 Key
 
 ```javascript
 const main = () => {
@@ -332,7 +356,7 @@ const main = () => {
 };
 ```
 
-#### 5.1.13 Rendering list of elements
+#### 5.1.15 Rendering list of elements
 
 ```javascript
 const fruits = ["Banana", "Apple", "Pear"];
