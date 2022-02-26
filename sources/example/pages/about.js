@@ -15,22 +15,37 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-import {createVirtualElement} from "../../sources/index.js";
-import {match, when, equals, always} from "../library/functional.js";
-import {home} from "../pages/home.js";
-import {about} from "../pages/about.js";
-import {notFound} from "../pages/not-found.js";
+import {createVirtualElement} from "../../index.js";
 
-export const main = (state, update) => {
+export const about = (state, update) => {
   return createVirtualElement({
-    name: "main",
-    attributes: {},
+    key: "about",
+    name: "div",
+    attributes: {
+      onbeforeload: () => {
+        console.log("About page is about to be loaded...");
+      },
+      onafterload: () => {
+        console.log("...about page is loaded.");
+      },
+      onbeforeunload: () => {
+        console.log("About page is about to be unloaded...");
+      },
+      onafterunload: () => {
+        console.log("...about page is unloaded.");
+      }
+    },
     children: [
-      match(state.route, [
-        when(equals("/"), () => home(state, update)),
-        when(equals("/about"), () => about(state, update)),
-        when(always(true), () => notFound(state, update))
-      ])
+      createVirtualElement({
+        name: "h1",
+        attributes: {},
+        children: ["About"]
+      }),
+      createVirtualElement({
+        name: "p",
+        attributes: {},
+        children: ["This is a little paragraph about your company."]
+      })
     ]
-  })
+  });
 };

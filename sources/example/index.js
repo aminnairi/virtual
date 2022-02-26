@@ -15,24 +15,42 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-import {createVirtualElement} from "../../sources/index.js";
+import {createApplication, createVirtualElement} from "../index.js";
+import {header} from "./components/header.js";
+import {main} from "./components/main.js";
 
-export const home = (state, update) => {
-  return createVirtualElement({
-    key: "home",
+const dispatch = createApplication({
+  element: document.getElementById("application"),
+  state: {
+    route: window.location.pathname
+  },
+  update: (state, {type, payload}) => {
+    switch (type) {
+      case "ROUTE_CHANGED":
+        return {...state, route: payload};
+
+      default:
+        return state;
+    }
+  },
+  view: (state, update) => createVirtualElement({
     name: "div",
     attributes: {},
     children: [
-      createVirtualElement({
-        name: "h1",
-        attributes: {},
-        children: ["Home"]
-      }),
-      createVirtualElement({
-        name: "p",
-        attributes: {},
-        children: ["This is a little paragraph about why users should choose your services."]
-      })
+      header(state, update),
+      main(state, update)
     ]
+  })
+});
+
+window.addEventListener("popstate", () => {
+  window.dispatchEvent(new CustomEvent("route"));
+});
+
+window.addEventListener("route", () => {
+  dispatch({
+    type: "ROUTE_CHANGED",
+    payload: window.location.pathname
   });
-};
+});
+
