@@ -615,7 +615,8 @@ main();
 - [X] Hosted example
 - [X] Readonly callback arguments
 - [X] SVG support for element with an `xmlns`
-- [ ] onpreload, onpreunload, documentation
+- [X] onbeforeload, onbeforeunload, documentation
+- [ ] Asynchronous lifecycle events for animations
 - [ ] Unit tests
 - [ ] Explicit runtime errors
 - [ ] NPM library
