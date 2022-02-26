@@ -612,10 +612,10 @@ main();
 - [X] Add a load handler when creating a virtual element
 - [X] Add an unload handler when creating a virtual element
 - [X] Keying
-- [X] Hosted example
 - [X] Readonly callback arguments
 - [X] SVG support for element with an `xmlns`
 - [X] onbeforeload, onbeforeunload, documentation
+- [ ] Hosted example
 - [ ] Asynchronous lifecycle events for animations
 - [ ] createVirtualSvgElement
 - [ ] Element reference in lifecycle events
