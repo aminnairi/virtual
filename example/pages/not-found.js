@@ -20,6 +20,7 @@ import {go} from "../library/router.js";
 
 export const notFound = (state, update) => {
   return createVirtualElement({
+    key: "notfound",
     name: "div",
     attributes: {},
     children: [

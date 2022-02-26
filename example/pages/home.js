@@ -19,6 +19,7 @@ import {createVirtualElement} from "../../sources/index.js";
 
 export const home = (state, update) => {
   return createVirtualElement({
+    key: "home",
     name: "div",
     attributes: {},
     children: [
