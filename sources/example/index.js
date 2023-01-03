@@ -18,6 +18,8 @@
 import {createApplication, createVirtualElement} from "../index.js";
 import {header} from "./components/header.js";
 import {main} from "./components/main.js";
+import {onRoute} from "./library/router.js"
+import {ACTIONS} from "./actions.js"
 
 const dispatch = createApplication({
   element: document.getElementById("application"),
@@ -26,31 +28,35 @@ const dispatch = createApplication({
   },
   update: (state, {type, payload}) => {
     switch (type) {
-      case "ROUTE_CHANGED":
-        return {...state, route: payload};
+      case ACTIONS.ROUTE_CHANGED:
+        return {
+          ...state,
+          route: payload
+        };
 
       default:
         return state;
     }
   },
-  view: (state, update) => createVirtualElement({
-    name: "div",
-    attributes: {},
-    children: [
-      header(state, update),
-      main(state, update)
-    ]
-  })
+  view: (state, update) => {
+    return createVirtualElement({
+      name: "div",
+      attributes: {},
+      children: [
+        header(state, update),
+        main(state, update)
+      ]
+    })
+  }
 });
 
 window.addEventListener("popstate", () => {
   window.dispatchEvent(new CustomEvent("route"));
 });
 
-window.addEventListener("route", () => {
+onRoute(route => {
   dispatch({
-    type: "ROUTE_CHANGED",
-    payload: window.location.pathname
-  });
-});
-
+    type: ACTIONS.ROUTE_CHANGED,
+    payload: route
+  })
+})
