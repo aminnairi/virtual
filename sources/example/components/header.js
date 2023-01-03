@@ -17,6 +17,8 @@
  */
 import {createVirtualElement} from "../../index.js";
 import {go, isRoute} from "../library/router.js";
+import {style} from "../library/style.js"
+import {pages} from "../pages/index.js"
 
 export const header = (state, update) => {
   return createVirtualElement({
@@ -30,15 +32,21 @@ export const header = (state, update) => {
           createVirtualElement({
             name: "li",
             attributes: {
-              style: state.route === "/" ? "text-decoration: underline" : "",
-              onclick: () => go("/")
+              style: style({
+                "text-decoration": isRoute(pages.home)(state.route) ? "underline" : null,
+                "cursor": "pointer"
+              }),
+              onclick: () => go(pages.home)
             },
             children: ["Home"]
           }),
           createVirtualElement({
             name: "li",
             attributes: {
-              style: state.route === "/contact" ? "text-decoration: underline" : "",
+              style: style({
+                "text-decoration": isRoute("/contact")(state.route) ? "underline" : null,
+                "cursor": "pointer"
+              }),
               onclick: () => go("/contact")
             },
             children: ["Contact"]
@@ -46,16 +54,22 @@ export const header = (state, update) => {
           createVirtualElement({
             name: "li",
             attributes: {
-              style: state.route === "/about" ? "text-decoration: underline" : "",
-              onclick: () => go("/about")
+              style: style({
+                "text-decoration": isRoute(pages.about)(state.route) ? "underline" : null,
+                "cursor": "pointer"
+              }),
+              onclick: () => go(pages.about)
             },
             children: ["About"]
           }),
           createVirtualElement({
             name: "li",
             attributes: {
-              style: isRoute("/user/:user")(state.route) ? "text-decoration: underline" : "",
-              onclick: () => go("/user/123")
+              style: style({
+                "text-decoration": isRoute(pages.user.plain)(state.route) ? "underline" : null,
+                "cursor": "pointer"
+              }),
+              onclick: () => go(pages.user.computed({user: 123}))
             },
             children: ["User#123"]
           })
