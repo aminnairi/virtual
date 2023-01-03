@@ -16,9 +16,12 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 import {createVirtualElement} from "../../index.js";
-import {match, when, equals, always} from "../library/functional.js";
+import {match, when, always, equals} from "../library/functional.js";
+import {isRoute} from "../library/router.js"
+import {pages} from "../pages/index.js"
 import {home} from "../pages/home.js";
 import {about} from "../pages/about.js";
+import {user} from "../pages/user.js"
 import {notFound} from "../pages/not-found.js";
 
 export const main = (state, update) => {
@@ -27,8 +30,9 @@ export const main = (state, update) => {
     attributes: {},
     children: [
       match(state.route, [
-        when(equals("/"), () => home(state, update)),
-        when(equals("/about"), () => about(state, update)),
+        when(isRoute(pages.home), () => home(state, update)),
+        when(equals(pages.about), () => about(state, update)),
+        when(isRoute(pages.user.plain), () => user(state, update)),
         when(always(true), () => notFound(state, update))
       ])
     ]
