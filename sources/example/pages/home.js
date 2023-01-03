@@ -16,6 +16,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 import {createVirtualElement} from "../../index.js";
+import {ACTIONS} from "../actions.js";
 
 export const home = (state, update) => {
   return createVirtualElement({
@@ -32,6 +33,20 @@ export const home = (state, update) => {
         name: "p",
         attributes: {},
         children: ["This is a little paragraph about why users should choose your services."]
+      }),
+      createVirtualElement({
+        name: "button",
+        attributes: {
+          onclick: () => {
+            update({
+              type: ACTIONS.COUNTER_INCREMENTED,
+              payload: null
+            })
+          }
+        },
+        children: [
+          `Counter is ${state.counter}`
+        ]
       })
     ]
   });

@@ -10,7 +10,7 @@ This is just an exploration of mine, this wont be a big thing. This library is s
 
 ## 2 Reasons to use
 
-- Only weights 7K unminified, 4K minified, and 2K minified + gzipped.
+- Lightweight
 - Source-code open and readable for humans.
 - No JSX and thus can be used with a CDN anywhere.
 - You like functional programming.
@@ -18,6 +18,7 @@ This is just an exploration of mine, this wont be a big thing. This library is s
 - TEA architecture for handling states and updates.
 - Best user experience when used with RxJS, Loadash, Ramda, Underscore, ...
 - Best user experience when used with TailwindCSS.
+- GPLv3 licence
 
 ## 3 Reasons not to use
 
@@ -27,12 +28,20 @@ This is just an exploration of mine, this wont be a big thing. This library is s
 - Not enough stars, because not so many users.
 - Not so many users, because not so many stars.
 - You don't like functional programming, RxJS, Lodash, Ramda, Underscore or TailwindCSS.
+- You don't like participating in open-source
 
 ## 4 Usage
 
 ```html
 <!DOCTYPE html>
-<html>
+<html lang="en-US">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="This is my application">
+    <meta name="theme-color" content="#ffffff">
+    <title>Application</title>
+  </head>
   <body>
     <div id="application"></div>
     <script type="module">
@@ -548,7 +557,14 @@ main();
 
 ```html
 <!DOCTYPE html>
-<html>
+<html lang="en-US">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="This is my application">
+    <meta name="theme-color" content="#ffffff">
+    <title>Application</title>
+  </head>
   <body>
     <div id="application"></div>
     <script type="module">
@@ -573,7 +589,14 @@ main();
 
 ```html
 <!DOCTYPE html>
-<html>
+<html lang="en-US">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="This is my application">
+    <meta name="theme-color" content="#ffffff">
+    <title>Application</title>
+  </head>
   <body>
     <div id="application"></div>
     <script src="https://cdn.jsdelivr.net/gh/aminnairi/virtual/build/virtual.browser.js"></script>
@@ -608,7 +631,7 @@ main();
 - [X] Virtual DOM creation algorithm
 - [X] DOM diffing
 - [X] DOM patching
-- [X] Global TEA-like state
+- [X] Global TEA-like architecture
 - [X] Add a load handler when creating a virtual element
 - [X] Add an unload handler when creating a virtual element
 - [X] Keying
@@ -616,6 +639,8 @@ main();
 - [X] SVG support for element with an `xmlns`
 - [X] onbeforeload, onbeforeunload, documentation
 - [ ] Hosted example
+- [ ] Commented source-code
+- [ ] Workspaces
 - [ ] Asynchronous lifecycle events for animations
 - [ ] createVirtualSvgElement
 - [ ] Element reference in lifecycle events
@@ -624,7 +649,7 @@ main();
 - [ ] Unit tests
 - [ ] Explicit runtime errors
 - [ ] NPM library
-- [ ] TypeScript (probably too hard for me but who knows)
+- [ ] Linter
 - [ ] Lunch with Musk when 100k+ stars
 
 ## 9 Contributing

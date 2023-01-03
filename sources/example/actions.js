@@ -16,5 +16,6 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 export const ACTIONS = {
-  ROUTE_CHANGED: "ROUTE_CHANGED"
+  ROUTE_CHANGED: "ROUTE_CHANGED",
+  COUNTER_INCREMENTED: "COUNTER_INCREMENTED"
 }

@@ -24,7 +24,8 @@ import {ACTIONS} from "./actions.js"
 const dispatch = createApplication({
   element: document.getElementById("application"),
   state: {
-    route: window.location.pathname
+    route: window.location.pathname,
+    counter: 0
   },
   update: (state, {type, payload}) => {
     switch (type) {
@@ -32,6 +33,12 @@ const dispatch = createApplication({
         return {
           ...state,
           route: payload
+        };
+
+      case ACTIONS.COUNTER_INCREMENTED:
+        return {
+          ...state,
+          counter: state.counter + 1
         };
 
       default:
