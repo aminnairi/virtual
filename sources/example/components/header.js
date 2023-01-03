@@ -16,7 +16,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 import {createVirtualElement} from "../../index.js";
-import {go} from "../library/router.js";
+import {go, isRoute} from "../library/router.js";
 
 export const header = (state, update) => {
   return createVirtualElement({
@@ -50,6 +50,14 @@ export const header = (state, update) => {
               onclick: () => go("/about")
             },
             children: ["About"]
+          }),
+          createVirtualElement({
+            name: "li",
+            attributes: {
+              style: isRoute("/user/:user")(state.route) ? "text-decoration: underline" : "",
+              onclick: () => go("/user/123")
+            },
+            children: ["User#123"]
           })
         ]
       })
