@@ -17,5 +17,50 @@
  */
 export const go = route => {
   window.history.pushState(null, null, route);
-  window.dispatchEvent(new CustomEvent("route"));
+  window.dispatchEvent(new CustomEvent("popstate"));
 };
+
+export const isRoute = (route) => {
+  return (path) => {
+    const routeParts = route.split(/\/+/).filter(Boolean)
+    const pathParts = path.split(/\/+/).filter(Boolean)
+
+    if (routeParts.length !== pathParts.length) {
+      return false
+    }
+
+    return routeParts.every((routePart, routePartIndex) => {
+      if (routePart.startsWith(":")) {
+        return true
+      }
+
+      return routePart === pathParts[routePartIndex]
+    })
+  }
+}
+
+export const parameters = (route, path) => {
+  const routeParts = route.split(/\/+/).filter(Boolean)
+  const pathParts = path.split(/\/+/).filter(Boolean)
+
+  if (routeParts.length !== pathParts.length) {
+    return {}
+  }
+
+  return routeParts.reduce((previousParameters, routePart, routePartIndex) => {
+    if (routePart.startsWith(":")) {
+      return {
+        ...previousParameters,
+        [routePart.slice(1)]: pathParts[routePartIndex]
+      }
+    }
+
+    return previousParameters
+  }, {})
+}
+
+export const onRoute = (callback) => {
+  window.addEventListener("popstate", () => {
+    callback(window.location.pathname)
+  });
+}
